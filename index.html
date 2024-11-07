@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Incremental Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="header">-=| devGame Intranet CONSOLE v3.14159|=-</h1>
+        <p class="intro">Welcome to devGame. Are you the best developper ?</p>
+
+        <div class="section" id="stats">
+            <h2>Stats</h2>
+            <p>Money: <span id="money">100</span></p>
+            <p>Money per pulse: <span id="money-per-pulse">1</span></p>
+            <p>Pulse speed: <span id="pulse-speed">1000 ms</span></p>
+        </div>
+
+        <div class="section" id="projects">
+            <h2>Projects</h2>
+            <button onclick="takeQuickProject()">Take quick project</button>
+            <button onclick="startProject()">Start project</button>
+        </div>
+
+        <div class="section" id="improvements">
+            <h2>Improvements</h2>
+            <button onclick="upgradeComputer()">Upgrade computer (+10% efficiency)</button>
+        </div>
+
+        <div class="section" id="shop">
+            <h2>Shop</h2>
+            <button onclick="buyCoffee()">Buy coffee (+3% money rate)</button>
+            <button onclick="buyEnergyDrink()">Buy energy drink (+0.75x pulse speed)</button>
+        </div>
+
+        <div class="section" id="lottery">
+            <h2>Lottery</h2>
+            <button onclick="buyLotteryTicket()">Buy a ticket (1$)</button>
+            <p>Money spent: <span id="money-spent">0</span></p>
+            <p>Win percent: <span id="win-percent">0%</span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
