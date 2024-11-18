@@ -2,6 +2,9 @@
 let money = 100;
 let moneyPerPulse = 1;
 let pulseSpeed = 1000; // in milliseconds
+let pulseInterval = null; // Store the interval ID
+
+// --------------- Stats functions ---------------
 
 // Update the display
 function updateStats() {
@@ -18,7 +21,7 @@ function earnMoney() {
 // Pulse loop
 setInterval(earnMoney, pulseSpeed);
 
-// Project functions
+// --------------- Project functions ---------------
 function takeQuickProject() {
     if (money >= 10) {
         disableButton('quick-project-btn', 'quick-project-timer', 'quick-project-progress', 7500);
@@ -53,7 +56,60 @@ function startProject() {
     }
 }
 
-// Button
+
+// --------------- Upgrade functions ---------------
+function upgradeComputer() {
+    if (money >= 100) {
+        money -= 100;
+        moneyPerPulse += 1; // Increase money per pulse
+        updateStats();
+    } else {
+        alert("Not enough money to upgrade the computer!");
+    }
+}
+
+// --------------- Shop functions ---------------
+function buyCoffee() {
+    if (money >= 5) {
+        disableButton('start-coffee-btn', 'coffee-timer', 'start-shop-progress', 120000);
+        money -= 5;
+        moneyPerPulse *= 1.03; // Increase money rate by 3%
+        updateStats();
+    } else {
+        alert("Not enough money to buy coffee!");
+    }
+}
+
+function buyEnergyDrink() {
+    if (money >= 15) {
+        money -= 15;
+        pulseSpeed = Math.max(100, pulseSpeed * 0.9); // Decrease pulse speed by 10% (starting from 1000ms and going down to 100ms)
+        updateStats();
+        startPulseLoop(); // Restart the pulse loop with the new speed
+    } else {
+        alert("Not enough money to buy an energy drink!");
+    }
+}
+
+// --------------- Lottery functions ---------------
+// Lottery function (just an example, winning chance can be improved)
+function buyLotteryTicket() {
+    if (money >= 1) {
+        money -= 1;
+        if (Math.random() < 0.05) { // 5% win chance
+            let prize = 100;
+            money += prize;
+            alert("You won the lottery! Prize: $" + prize);
+        } else {
+            alert("You didn't win the lottery this time.");
+        }
+        updateStats();
+    } else {
+        alert("Not enough money for a lottery ticket!");
+    }
+}
+
+// --------------- functions ---------------
 // Disable button with a timer
 function disableButton(buttonId, timerId, progressBarId, duration) {
     
@@ -88,55 +144,16 @@ function disableButton(buttonId, timerId, progressBarId, duration) {
     }, interval);
 }
 
-// Upgrade functions
-function upgradeComputer() {
-    if (money >= 100) {
-        money -= 100;
-        moneyPerPulse += 1; // Increase money per pulse
-        updateStats();
-    } else {
-        alert("Not enough money to upgrade the computer!");
+// Start or restart the pulse loop
+function startPulseLoop() {
+    // Clear the existing interval
+    if (pulseInterval !== null) {
+        clearInterval(pulseInterval);
     }
-}
-
-// Shop functions
-function buyCoffee() {
-    if (money >= 5) {
-        disableButton('start-coffee-btn', 'coffee-timer', 'start-shop-progress', 120000);
-        money -= 5;
-        moneyPerPulse *= 1.03; // Increase money rate by 3%
-        updateStats();
-    } else {
-        alert("Not enough money to buy coffee!");
-    }
-}
-
-function buyEnergyDrink() {
-    if (money >= 15) {
-        money -= 15;
-        pulseSpeed = Math.max(100, pulseSpeed * 0.9); // Increase pulse speed
-        updateStats();
-    } else {
-        alert("Not enough money to buy an energy drink!");
-    }
-}
-
-// Lottery function (just an example, winning chance can be improved)
-function buyLotteryTicket() {
-    if (money >= 1) {
-        money -= 1;
-        if (Math.random() < 0.05) { // 5% win chance
-            let prize = 100;
-            money += prize;
-            alert("You won the lottery! Prize: $" + prize);
-        } else {
-            alert("You didn't win the lottery this time.");
-        }
-        updateStats();
-    } else {
-        alert("Not enough money for a lottery ticket!");
-    }
+    // Start a new interval with the updated pulseSpeed
+    pulseInterval = setInterval(earnMoney, pulseSpeed);
 }
 
 // Initialize display
 updateStats();
+startPulseLoop();
