@@ -22,9 +22,16 @@ setInterval(earnMoney, pulseSpeed);
 // Project functions
 function takeQuickProject() {
     if (money >= 10) {
-        disableButton('quick-project-btn', 'quick-project-timer', 'quick-project-progress', 15000);
-        money += 20; // Quick project reward
+        disableButton('quick-project-btn', 'quick-project-timer', 'quick-project-progress', 7500);
+        money -= 10; // Déduire le coût du projet immédiatement
         updateStats();
+
+        // Ajouter la récompense après 15 secondes
+        setTimeout(() => {
+            money += 20; // Quick project reward
+            updateStats();
+            //alert("Quick project completed! You've earned $20.");
+        }, 15000);
     } else {
         alert("Not enough money for this project!");
     }
@@ -33,8 +40,15 @@ function takeQuickProject() {
 function startProject() {
     if (money >= 50) {
         disableButton('start-project-btn', 'start-project-timer', 'start-project-progress', 15000);
-        money += 100; // Project reward
+        money -= 50; // Déduire le coût du projet immédiatement
         updateStats();
+
+        // Ajouter la récompense après 15 secondes
+        setTimeout(() => {
+            money += 100; // Project reward
+            updateStats();
+            //alert("Project completed! You've earned $100.");
+        }, 15000);
     } else {
         alert("Not enough money to start this project!");
     }
@@ -49,7 +63,7 @@ function disableButton(buttonId, timerId, progressBarId, duration) {
     const progressBar = document.getElementById(progressBarId);
     
     // Affiche le timer
-    timerDiv.style.display = 'block';
+    //timerDiv.style.display = 'block';
     button.disabled = true;
 
     let remainingTime = duration;
@@ -70,7 +84,7 @@ function disableButton(buttonId, timerId, progressBarId, duration) {
             progressBar.style.width = '0%';
 
             // Masque le timer
-            timerDiv.style.display = 'none';
+            //timerDiv.style.display = 'none';
         }
     }, interval);
 }
