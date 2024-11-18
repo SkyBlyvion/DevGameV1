@@ -5,11 +5,10 @@ let pulseSpeed = 1000; // in milliseconds
 
 // Update the display
 function updateStats() {
-    document.getElementById('money').textContent = money;
-    document.getElementById('money-per-pulse').textContent = moneyPerPulse;
-    document.getElementById('pulse-speed').textContent = `${pulseSpeed} ms`;
+    document.getElementById('money').textContent = money.toFixed(2); // Format money with 2 decimal places
+    document.getElementById('money-per-pulse').textContent = moneyPerPulse.toFixed(2); // Format money per pulse
+    document.getElementById('pulse-speed').textContent = `${pulseSpeed} ms`; // Pulse speed remains as is
 }
-
 // Earn money on pulse
 function earnMoney() {
     money += moneyPerPulse;
