@@ -58,7 +58,7 @@ function startProject() {
 function disableButton(buttonId, timerId, progressBarId, duration) {
     
     const button = document.getElementById(buttonId);
-    const timerDiv = document.getElementById(timerId);
+    //const timerDiv = document.getElementById(timerId);
     const progressBar = document.getElementById(progressBarId);
     
     // Affiche le timer
@@ -102,6 +102,7 @@ function upgradeComputer() {
 // Shop functions
 function buyCoffee() {
     if (money >= 5) {
+        disableButton('start-coffee-btn', 'coffee-timer', 'start-shop-progress', 120000);
         money -= 5;
         moneyPerPulse *= 1.03; // Increase money rate by 3%
         updateStats();

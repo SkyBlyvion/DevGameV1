@@ -22,13 +22,13 @@
 
             <h2>Projects</h2>
 
-            <button id="quick-project-btn" onclick="takeQuickProject()">Take quick project (Cost 10 $) give 20$</button>
+            <button id="quick-project-btn" onclick="takeQuickProject()">Take quick project (Cost 10 $) give 20$ (5s)</button>
             <div id="quick-project-timer" class="timer" >
                 <!-- style="display: none; for the progressBar-->
                 <div class="progress-bar" id="quick-project-progress"></div>
             </div>
 
-            <button id="start-project-btn" onclick="startProject()">Start project (Cost 50 $) give 100$</button>
+            <button id="start-project-btn" onclick="startProject()">Start project (Cost 50 $) give 100$ (15s)</button>
             <div id="start-project-timer" class="timer" >
                 <div class="progress-bar" id="start-project-progress" ></div>
             </div>
@@ -40,8 +40,15 @@
         </div>
 
         <div class="section" id="shop">
+
             <h2>Shop</h2>
-            <button onclick="buyCoffee()">Buy coffee (+3% money rate)</button>
+
+            <!-- Coffee -->
+            <button id="start-coffee-btn" onclick="buyCoffee()">Buy coffee (+3% money rate) (2min)</button>
+            <div id="coffee-timer" class="timer" >
+                <div class="progress-bar" id="start-shop-progress" ></div>
+            </div>
+
             <button onclick="buyEnergyDrink()">Buy energy drink (+0.75x pulse speed)</button>
         </div>
 
