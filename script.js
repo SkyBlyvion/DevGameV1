@@ -22,6 +22,7 @@ setInterval(earnMoney, pulseSpeed);
 // Project functions
 function takeQuickProject() {
     if (money >= 10) {
+        disableButton('quick-project-btn', 'quick-project-timer', 'quick-project-progress', 15000);
         money += 20; // Quick project reward
         updateStats();
     } else {
@@ -31,11 +32,39 @@ function takeQuickProject() {
 
 function startProject() {
     if (money >= 50) {
+        disableButton('start-project-btn', 'start-project-timer', 'start-project-progress', 15000);
         money += 100; // Project reward
         updateStats();
     } else {
         alert("Not enough money to start this project!");
     }
+}
+
+// Button
+// Disable button with a timer
+function disableButton(buttonId, timerId, progressBarId, duration) {
+    const button = document.getElementById(buttonId);
+    const timer = document.getElementById(progressBarId);
+    button.disabled = true;
+
+    let remainingTime = duration;
+    let interval = 100; // Update every 100ms
+    let step = 100 / (duration / interval); // Step for the progress bar
+
+    let progress = 0;
+    timer.style.width = '0%';
+
+    const countdown = setInterval(() => {
+        remainingTime -= interval;
+        progress += step;
+        timer.style.width = `${progress}%`;
+
+        if (remainingTime <= 0) {
+            clearInterval(countdown);
+            button.disabled = false;
+            timer.style.width = '0%';
+        }
+    }, interval);
 }
 
 // Upgrade functions

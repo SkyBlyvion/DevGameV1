@@ -19,14 +19,23 @@
         </div>
 
         <div class="section" id="projects">
+
             <h2>Projects</h2>
-            <button onclick="takeQuickProject()">Take quick project</button>
-            <button onclick="startProject()">Start project</button>
+
+            <button id="quick-project-btn" onclick="takeQuickProject()">Take quick project</button>
+            <div id="quick-project-timer" class="timer">
+                <div class="progress-bar" id="quick-project-progress"></div>
+            </div>
+            
+            <button id="start-project-btn" onclick="startProject()">Start project</button>
+            <div id="start-project-timer" class="timer">
+                <div class="progress-bar" id="start-project-progress"></div>
+            </div>
         </div>
 
         <div class="section" id="improvements">
             <h2>Improvements</h2>
-            <button onclick="upgradeComputer()">Upgrade computer (+10% efficiency)</button>
+            <button onclick="upgradeComputer()">Upgrade computer (+1 Pulse)</button>
         </div>
 
         <div class="section" id="shop">
