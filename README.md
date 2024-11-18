@@ -92,6 +92,11 @@ If you’d like to make the game more interesting, here are some ideas for expan
 
 5. **Prestige System** 🔄: Implement a prestige mechanic that lets players "restart" with bonuses, increasing replayability.
 
+Notes: 
+- Implements a box next to Stats;  "Search for a job" and fun dev names, like ( Front, Back, Sec, FullStack ...), 3 jobs max.
+- Implements the Lottery effectively 
+- Refactor improvements
+
 ---
 
 ## Example Code Snippet 💻
