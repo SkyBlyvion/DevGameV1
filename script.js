@@ -43,8 +43,13 @@ function startProject() {
 // Button
 // Disable button with a timer
 function disableButton(buttonId, timerId, progressBarId, duration) {
+    
     const button = document.getElementById(buttonId);
-    const timer = document.getElementById(progressBarId);
+    const timerDiv = document.getElementById(timerId);
+    const progressBar = document.getElementById(progressBarId);
+    
+    // Affiche le timer
+    timerDiv.style.display = 'block';
     button.disabled = true;
 
     let remainingTime = duration;
@@ -52,17 +57,20 @@ function disableButton(buttonId, timerId, progressBarId, duration) {
     let step = 100 / (duration / interval); // Step for the progress bar
 
     let progress = 0;
-    timer.style.width = '0%';
+    progressBar.style.width = '0%';
 
     const countdown = setInterval(() => {
         remainingTime -= interval;
         progress += step;
-        timer.style.width = `${progress}%`;
+        progressBar.style.width = `${progress}%`;
 
         if (remainingTime <= 0) {
             clearInterval(countdown);
             button.disabled = false;
-            timer.style.width = '0%';
+            progressBar.style.width = '0%';
+
+            // Masque le timer
+            timerDiv.style.display = 'none';
         }
     }, interval);
 }
