@@ -84,7 +84,7 @@ function buyEnergyDrink() {
     if (money >= 35) {
         disableButton('start-energy-btn', 'energy-timer', 'start-SEnergy-progress', 600000);
         money -= 35;
-        pulseSpeed = Math.max(100, pulseSpeed * 0.9); // Decrease pulse speed by 10% (starting from 1000ms and going down to 100ms)
+        pulseSpeed = Math.max(100, pulseSpeed * 0.95); // Decrease pulse speed by 5% (starting from 1000ms and going down to 100ms)
         updateStats();
         startPulseLoop(); // Restart the pulse loop with the new speed
     } else {
