@@ -96,31 +96,30 @@ If you’d like to make the game more interesting, here are some ideas for expan
 
 ## Example Code Snippet 💻
 
-Here's a quick look at some core JavaScript functionality that handles the pulse mechanic:
+Here's a quick look at the gameState object, it encapsulates:
+
+Game Variables: money, moneyPerPulse, pulseSpeed.
+Pulse Interval: Tracks the current earning interval.
+Cached DOM Elements: Frequently accessed elements for updating stats efficiently.
 
 ```javascript
-// Earn money on pulse
-function earnMoney() {
-    money += moneyPerPulse;
-    updateStats();
-}
-
-// Pulse loop
-setInterval(earnMoney, pulseSpeed);
-
-// Upgrade functions
-function upgradeComputer() {
-    if (money >= 100) {
-        money -= 100;
-        moneyPerPulse += 1; // Increase money per pulse
-        updateStats();
-    } else {
-        alert("Not enough money to upgrade the computer!");
+const gameState = {
+    money: 100, // Starting money
+    moneyPerPulse: 1, // Earnings per pulse
+    pulseSpeed: 1000, // Interval duration (ms) for earnings
+    pulseInterval: null, // ID of the interval timer
+    elements: {
+        moneyDisplay: document.getElementById('money'),
+        moneyPerPulseDisplay: document.getElementById('money-per-pulse'),
+        pulseSpeedDisplay: document.getElementById('pulse-speed')
     }
-}
+};
 ```
 
 ---
+
+## Features
+
 
 ## License 📜
 
