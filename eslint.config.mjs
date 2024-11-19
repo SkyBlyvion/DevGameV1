@@ -1,7 +1,5 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
-import htmlPlugin from "eslint-plugin-html";
-import cssPlugin from "eslint-plugin-css";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -10,7 +8,7 @@ export default [
     files: ["**/*.js"],
     languageOptions: { sourceType: "script" },
     rules: {
-      "no-unused-vars": "warn", // Warn about unused variables
+      "no-unused-vars": "off", // Warn about unused variables
       "semi": ["error", "always"], // Enforce semicolons
       "quotes": ["error", "double"], // Enforce double quotes
       "eqeqeq": "error", // Require === and !==

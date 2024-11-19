@@ -46,6 +46,7 @@ function startPulseLoop() {
 }
 
 // --------------- Project functions ---------------
+///* eslint-disable-next-line no-unused-vars */
 function takeQuickProject() {
     if (gameState.money >= 10) {
         disableButton('quick-project-btn', 'quick-project-progress', 7500);

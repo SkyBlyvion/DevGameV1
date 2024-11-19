@@ -159,6 +159,10 @@ Happy coding, and enjoy becoming the best developer in the virtual world of **De
 ### Run On Clone
 - npm install & npx stylelint "**/styles.css"
 
+
+## Installation html linter
+- npm install htmlhint --save-dev
+
 ```
 
 ```

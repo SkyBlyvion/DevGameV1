@@ -4,7 +4,11 @@
   "description": "Welcome to **DevGame Intranet Console** – a retro, terminal-style incremental game inspired by classic idle games like *Cookie Clicker* and *Adventure Capitalist*. This game is designed to give you a nostalgic experience with green-on-black console aesthetics, using only **HTML**, **CSS**, and **JavaScript**. Your goal? Become the richest person in the world by taking on projects, upgrading equipment, and optimizing your pulse rate! 💰",
   "main": "optimized_game.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint:js": "eslint '**/*.js'",
+    "lint:css": "stylelint '**/*.css'",
+    "lint:html": "htmlhint '**/*.html'",
+    "lint": "npm run lint:js; npm run lint:css; npm run lint:html",
+    "install:all": "npm install && echo 'All dependencies installed! Ready to lint.'"
   },
   "repository": {
     "type": "git",
@@ -20,10 +24,8 @@
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "eslint": "^9.15.0",
-    "eslint-plugin-css": "^0.11.0",
-    "eslint-plugin-html": "^8.1.2",
-    "eslint-plugin-import": "^2.31.0",
     "globals": "^15.12.0",
+    "htmlhint": "^1.1.4",
     "stylelint": "^16.10.0",
     "stylelint-config-standard": "^36.0.1"
   }
