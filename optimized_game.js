@@ -81,6 +81,7 @@ function startProject() {
 // --------------- Upgrade functions ---------------
 function upgradeComputer() {
     if (gameState.money >= 100) {
+        disableButton('start-computer-btn', 'start-computer-progress', 120000);
         gameState.money -= 100;
         gameState.moneyPerPulse += 1; // Increase money per pulse
         updateStats();

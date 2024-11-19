@@ -19,40 +19,54 @@
         </div>
 
         <div class="section" id="projects">
-
             <h2>Projects</h2>
-
-            <button id="quick-project-btn" onclick="takeQuickProject()">Take quick project (Cost 10 $) give 20$ (5s)</button>
-            <div  class="timer" >
-                <!-- style="display: none; for the progressBar-->
-                <div class="progress-bar" id="quick-project-progress"></div>
-            </div>
-
-            <button id="start-project-btn" onclick="startProject()">Start project (Cost 50 $) give 100$ (15s)</button>
-            <div  class="timer" >
-                <div class="progress-bar" id="start-project-progress" ></div>
-            </div>
+        
+            <button id="quick-project-btn" onclick="disableButton('quick-project-btn', 'quick-project-progress', 5000)">
+                <div class="progress-container">
+                    <div class="progress-bar" id="quick-project-progress"></div>
+                </div>
+                Take quick project (Cost 10 $) give 20$ (5s)
+            </button>
+        
+            <button id="start-project-btn" onclick="disableButton('start-project-btn', 'start-project-progress', 15000)">
+                <div class="progress-container">
+                    <div class="progress-bar" id="start-project-progress"></div>
+                </div>
+                Start project (Cost 50 $) give 100$ (15s)
+            </button>
         </div>
 
+        <!-- Improvements -->
         <div class="section" id="improvements">
             <h2>Improvements</h2>
-            <button onclick="upgradeComputer()">Upgrade computer (+1 Pulse) (Cost 100 $)</button>
+
+            <div>
+                <button id="start-computer-btn" onclick="upgradeComputer()">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="start-computer-progress"></div>
+                    </div>
+                    Upgrade computer (+1 Pulse) (Cost 100 $)
+                </button>
+            </div>
         </div>
+        
 
         <div class="section" id="shop">
-
             <h2>Shop</h2>
 
-            <!-- Coffee -->
-            <button id="start-coffee-btn" onclick="buyCoffee()">Buy coffee (Cost 5 $) (+3% money rate) (2min)</button>
-            <div  class="timer" >
-                <div class="progress-bar" id="start-shop-progress" ></div>
-            </div>
+            <button id="start-coffee-btn" onclick="disableButton('start-coffee-btn', 'start-coffee-progress', 120000)">
+                <div class="progress-container">
+                    <div class="progress-bar" id="start-coffee-progress"></div>
+                </div>
+                Buy coffee (Cost 5 $) (+3% money rate) (2min)
+            </button>
 
-            <button id="start-energy-btn" onclick="buyEnergyDrink()">Buy energy drink (Cost 35 $) (+0.75x pulse speed) (15min)</button>
-            <div  class="timer" >
-                <div class="progress-bar" id="start-SEnergy-progress" ></div>
-            </div>
+            <button id="start-energy-btn" onclick="disableButton('start-energy-btn', 'start-energy-progress', 900000)">
+                <div class="progress-container">
+                    <div class="progress-bar" id="start-energy-progress"></div>
+                </div>
+                Buy energy drink (Cost 35 $) (+0.75x pulse speed) (15min)
+            </button>
         </div>
 
         <div class="section" id="lottery">
