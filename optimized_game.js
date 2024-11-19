@@ -93,7 +93,7 @@ function upgradeComputer() {
 // --------------- Shop functions ---------------
 function buyCoffee() {
     if (gameState.money >= 5) {
-        disableButton('start-coffee-btn', 'start-shop-progress', 120000);
+        disableButton('start-coffee-btn', 'start-coffee-progress', 120000);
         gameState.money -= 5;
         gameState.moneyPerPulse *= 1.03; // Increase money rate by 3%
         updateStats();
@@ -104,7 +104,7 @@ function buyCoffee() {
 
 function buyEnergyDrink() {
     if (gameState.money >= 35) {
-        disableButton('start-energy-btn', 'start-SEnergy-progress', 600000);
+        disableButton('start-energy-btn', 'start-energy-progress', 600000);
         gameState.money -= 35;
         gameState.pulseSpeed = Math.max(100, gameState.pulseSpeed * 0.95); // Decrease pulse speed by 5%
         updateStats();
