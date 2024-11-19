@@ -56,23 +56,16 @@ button {
     overflow: hidden; /* Permet de contenir la barre à l'intérieur */
 }
 
-button:hover {
+/* button:hover {
     background-color: #00FF00;
     color: black;
-}
+} */
 
-/* Handle devices with coarse pointers (e.g., touch screens) */
-@media (hover: none) and (pointer: coarse) {
+/* Hover effect only for devices that can hover */
+@media (hover: hover) and (pointer: fine) {
     button:hover {
-        background-color: black; /* Reset to default background */
-        color: #00FF00; /* Reset to default text color */
-    }
-
-    /* Ensure no lingering focus/active styles */
-    button:focus, button:active {
-        background-color: black; /* Reset background */
-        color: #00FF00; /* Reset text color */
-        outline: none; /* Remove any default focus outline */
+        background-color: #00FF00;
+        color: black;
     }
 }
 
