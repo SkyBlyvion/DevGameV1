@@ -3,7 +3,7 @@
 
 Welcome to **DevGame Intranet Console** – a retro, terminal-style incremental game inspired by classic idle games like *Cookie Clicker* and *Adventure Capitalist*. This game is designed to give you a nostalgic experience with green-on-black console aesthetics, using only **HTML**, **CSS**, and **JavaScript**. Your goal? Become the richest person in the world by taking on projects, upgrading equipment, and optimizing your pulse rate! 💰
 
-![Game Screenshot](./CaptureFront1.png) <!-- Update with the path to your game screenshot -->
+![Game Screenshot](./Images/CaptureFront1.png) <!-- Update with the path to your game screenshot -->
 
 ## Table of Contents
 - [Features](#features)
