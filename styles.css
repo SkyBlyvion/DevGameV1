@@ -61,10 +61,18 @@ button:hover {
     color: black;
 }
 
+/* Handle devices with coarse pointers (e.g., touch screens) */
 @media (hover: none) and (pointer: coarse) {
     button:hover {
         background-color: black; /* Reset to default background */
         color: #00FF00; /* Reset to default text color */
+    }
+
+    /* Ensure no lingering focus/active styles */
+    button:focus, button:active {
+        background-color: black; /* Reset background */
+        color: #00FF00; /* Reset text color */
+        outline: none; /* Remove any default focus outline */
     }
 }
 
