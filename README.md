@@ -135,35 +135,94 @@ This project is licensed under the MIT License. You’re free to use, modify, an
 Happy coding, and enjoy becoming the best developer in the virtual world of **DevGame**! 💸✨
 
 
-## installation eslint
-
-- 1. npm init -y
-- 2. npm init @eslint/config
-### Run
-- npx eslint optimized_game.js 
-### Run On Clone
-- npm install & npx eslint optimized_game.js 
-
-- if old Version 
-- sudo apt remove nodejs
-- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
-- source ~/.bashrc
-- nvm install --lts
-- node -v
-- npm -v
-
-## installation stylelint
-- npm install stylelint stylelint-config-standard --save-dev
-### Run
-- npx stylelint "**/styles.css"
-### Run On Clone
-- npm install & npx stylelint "**/styles.css"
 
 
-## Installation html linter
-- npm install htmlhint --save-dev
+# DevGameV1 Linter Setup Guide
 
+## Installation ESLint (JavaScript Linter)
+
+1. Initialize `npm` in your project:
+   ```bash
+   npm init -y
+   ```
+
+2. Set up ESLint:
+   ```bash
+   npm init @eslint/config
+   ```
+
+### Run ESLint
+- To lint a file:
+  ```bash
+  npx eslint optimized_game.js
+  ```
+
+### Run ESLint After Cloning
+- Install dependencies and run:
+  ```bash
+  npm install
+  npx eslint optimized_game.js
+  ```
+
+### For Old Node.js Versions
+If you're using an older version of Node.js, update it using `nvm`:
+```bash
+sudo apt remove nodejs
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+source ~/.bashrc
+nvm install --lts
+node -v
+npm -v
 ```
 
-```
+---
+
+## Installation Stylelint (CSS Linter)
+
+1. Install Stylelint and its standard configuration:
+   ```bash
+   npm install stylelint stylelint-config-standard --save-dev
+   ```
+
+### Run Stylelint
+- To lint all CSS files:
+  ```bash
+  npx stylelint "**/*.css"
+  ```
+
+### Run Stylelint After Cloning
+- Install dependencies and run:
+  ```bash
+  npm install
+  npx stylelint "**/*.css"
+  ```
+
+---
+
+## Installation HTMLHint (HTML Linter)
+
+1. Install HTMLHint:
+   ```bash
+   npm install htmlhint --save-dev
+   ```
+
+### Run HTMLHint
+- To lint all HTML files:
+  ```bash
+  npx htmlhint "**/*.html"
+  ```
+
+---
+
+## Run All Linters
+
+- Run all linters (JavaScript, CSS, and HTML):
+  ```bash
+  npm run lint
+  ```
+
+- Run specific linters:
+  - JavaScript: `npm run lint:js`
+  - CSS: `npm run lint:css`
+  - HTML: `npm run lint:html`
 
