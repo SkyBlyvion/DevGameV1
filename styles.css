@@ -56,9 +56,16 @@ button {
     overflow: hidden; /* Permet de contenir la barre à l'intérieur */
 }
 
-button:active {
+button:hover {
     background-color: #00FF00;
     color: black;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    button:hover {
+        background-color: black; /* Reset to default background */
+        color: #00FF00; /* Reset to default text color */
+    }
 }
 
 .progress-container {
