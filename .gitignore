@@ -1,0 +1,36 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Linting
+.eslintcache
+
+# IDE/Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build output
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Package manager lock files (if not needed)
+package-lock.json
+
+# Others (specific to your use case)
+*.bak
+*.tmp
+*.lock

@@ -133,3 +133,33 @@ This project is licensed under the MIT License. You’re free to use, modify, an
 ---
 
 Happy coding, and enjoy becoming the best developer in the virtual world of **DevGame**! 💸✨
+
+
+## installation eslint
+
+- 1. npm init -y
+- 2. npm init @eslint/config
+### Run
+- npx eslint optimized_game.js 
+### Run On Clone
+- npm install & npx eslint optimized_game.js 
+
+- if old Version 
+- sudo apt remove nodejs
+- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+- source ~/.bashrc
+- nvm install --lts
+- node -v
+- npm -v
+
+## installation stylelint
+- npm install stylelint stylelint-config-standard --save-dev
+### Run
+- npx stylelint "**/styles.css"
+### Run On Clone
+- npm install & npx stylelint "**/styles.css"
+
+```
+
+```
+
