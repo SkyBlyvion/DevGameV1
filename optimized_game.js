@@ -56,7 +56,7 @@ function takeQuickProject() {
         setTimeout(() => {
             gameState.money += 20; // Quick project reward
             updateStats();
-        }, 15000);
+        }, 7500);
     } else {
         alert("Not enough money for this project!");
     }
