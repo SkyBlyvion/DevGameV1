@@ -56,7 +56,7 @@ button {
     overflow: hidden; /* Permet de contenir la barre à l'intérieur */
 }
 
-button:hover {
+button:active {
     background-color: #00FF00;
     color: black;
 }

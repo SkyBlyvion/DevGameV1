@@ -39,7 +39,7 @@ function startPulseLoop() {
     const { pulseSpeed } = gameState;
     // Clear the existing interval
     if (gameState.pulseInterval !== null) {
-        clearInterval(gameState.pulseInterval);
+        clearInterval(gameState.pulseInterval); // Avoid dangling references
     }
     // Start a new interval with the updated pulseSpeed
     gameState.pulseInterval = setInterval(earnMoney, pulseSpeed);
