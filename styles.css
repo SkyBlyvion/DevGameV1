@@ -90,3 +90,39 @@ button {
     z-index: 2; /* Par-dessus le fond mais sous le texte */
     transition: width 0.1s linear;
 }
+
+/* ---------- Modal Container ---------- */
+/* Modal container */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Above other elements */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #000;
+    color: #0F0;
+    padding: 20px;
+    border: 2px solid #0F0;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.2);
+}
+
+/* Close button */
+.close-button {
+    color: #0F0;
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+}

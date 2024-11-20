@@ -59,7 +59,7 @@ function takeQuickProject() {
             updateStats();
         }, 7500);
     } else {
-        alert("Not enough money for this project!");
+        showAlert("Not enough money for this project!");
     }
 }
 
@@ -75,7 +75,7 @@ function startProject() {
             updateStats();
         }, 15000);
     } else {
-        alert("Not enough money to start this project!");
+        showAlert("Not enough money to start this project!");
     }
 }
 
@@ -87,7 +87,7 @@ function upgradeComputer() {
         gameState.moneyPerPulse += 1; // Increase money per pulse
         updateStats();
     } else {
-        alert("Not enough money to upgrade the computer!");
+        showAlert("Not enough money to upgrade the computer!");
     }
 }
 
@@ -99,7 +99,7 @@ function buyCoffee() {
         gameState.moneyPerPulse *= 1.03; // Increase money rate by 3%
         updateStats();
     } else {
-        alert("Not enough money to buy coffee!");
+        showAlert("Not enough money to buy coffee!");
     }
 }
 
@@ -111,7 +111,7 @@ function buyEnergyDrink() {
         updateStats();
         startPulseLoop(); // Restart the pulse loop with the new speed
     } else {
-        alert("Not enough money to buy an energy drink!");
+        showAlert("Not enough money to buy an energy drink!");
     }
 }
 
@@ -122,13 +122,13 @@ function buyLotteryTicket() {
         if (Math.random() < 0.05) { // 5% win chance
             const prize = 100;
             gameState.money += prize;
-            alert("You won the lottery! Prize: $" + prize);
+            showAlert("You won the lottery! Prize: $" + prize);
         } else {
-            alert("You didn't win the lottery this time.");
+            showAlert("You didn't win the lottery this time.");
         }
         updateStats();
     } else {
-        alert("Not enough money for a lottery ticket!");
+        showAlert("Not enough money for a lottery ticket!");
     }
 }
 
@@ -156,6 +156,33 @@ function disableButton(buttonId, progressBarId, duration) {
         }
     }, interval);
 }
+
+// Alert Modal
+// Utility to display the modal
+function showAlert(message) {
+    const modal = document.getElementById("alert-modal");
+    const modalMessage = document.getElementById("modal-message");
+    const closeModal = document.getElementById("close-modal");
+
+    // Set the message
+    modalMessage.textContent = message;
+
+    // Show the modal
+    modal.style.display = "flex";
+
+    // Close the modal when the close button is clicked
+    closeModal.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // Close the modal when clicking outside the modal content
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
 
 // Initialize display and game loop
 updateStats();
