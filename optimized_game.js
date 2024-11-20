@@ -1,5 +1,4 @@
-
-// Game state
+// --------------- Game state ---------------
 // Encapsulates games variables into a single gamestate object
 // include cache dom elements in gamestate.elements
 const gameState = {
@@ -8,12 +7,15 @@ const gameState = {
     moneyPerPulse: 1,
     pulseSpeed: 1000, // in milliseconds
     jobIncome: 0, // Income generated from active jobs per second
+    projectBonus: 0, // Total bonus from jobs per project
     pulseInterval: null, // Store the interval ID
     
     elements: {
         moneyDisplay: document.getElementById("money"),
         moneyPerPulseDisplay: document.getElementById("money-per-pulse"),
-        pulseSpeedDisplay: document.getElementById("pulse-speed")
+        pulseSpeedDisplay: document.getElementById("pulse-speed"),
+        projectBonusDisplay: document.getElementById("project-bonus"), // Reference to project bonus element
+        jobIncomeDisplay: document.getElementById("job-bonus") // Reference to job income element
     }
 };
 
@@ -23,21 +25,21 @@ const gameState = {
 // Centralized updates to stats
 // Reduces the number of DOM updates by grouping them into a single function.
 function updateStats() {
-    const { money, moneyPerPulse, jobIncome, pulseSpeed, elements } = gameState;
+    const { money, moneyPerPulse, jobIncome, projectBonus, pulseSpeed, elements } = gameState;
     const totalIncomePerSecond = moneyPerPulse + jobIncome;
 
     elements.moneyDisplay.textContent = money.toFixed(2); // Format money with 2 decimal places
     elements.moneyPerPulseDisplay.textContent = totalIncomePerSecond.toFixed(2); // Update total income display
     elements.pulseSpeedDisplay.textContent = `${pulseSpeed} ms`; // Pulse speed remains as is
+
+    // Update jobIncome display
+    elements.jobIncomeDisplay.textContent = `${jobIncome.toFixed(2)} $/pulse`;
+
+    // Update project bonus display
+    elements.projectBonusDisplay.textContent = `${projectBonus.toFixed(2)} $`;
 }
 
-
-// Earn money on pulse
-// function earnMoney() {
-//     gameState.money += gameState.moneyPerPulse;
-//     updateStats();
-// }
-
+// Earn money
 function earnMoney() {
     gameState.money += gameState.moneyPerPulse + gameState.jobIncome / (1000 / gameState.pulseSpeed);
     updateStats();
@@ -56,6 +58,7 @@ function startPulseLoop() {
 }
 
 // --------------- Job functions ---------------
+
 // List of jobs
 const jobList = [
     "Dev Front-end",
@@ -77,20 +80,20 @@ const jobList = [
 
 // Properties for each job
 const jobProperties = {
-    "Dev Front-end": { incomePerSecond: 2, bonusPerProject: 8 },
-    "Dev Back-end": { incomePerSecond: 3, bonusPerProject: 10 },
-    "Dev Full Stack": { incomePerSecond: 6, bonusPerProject: 12 },
-    "Dev Mobile": { incomePerSecond: 2, bonusPerProject: 9 },
-    "Analyste Sécurité": { incomePerSecond: 3, bonusPerProject: 15 },
-    "Data Scientist": { incomePerSecond: 4, bonusPerProject: 18 },
-    "Admin Sys": { incomePerSecond: 3, bonusPerProject: 11 },
+    "Dev Front-end": { incomePerSecond: 2, bonusPerProject: 6 },
+    "Dev Back-end": { incomePerSecond: 3, bonusPerProject: 9 },
+    "Dev Full Stack": { incomePerSecond: 6, bonusPerProject: 18 },
+    "Dev Mobile": { incomePerSecond: 2, bonusPerProject: 6 },
+    "Analyste Sécurité": { incomePerSecond: 3, bonusPerProject: 11 },
+    "Data Scientist": { incomePerSecond: 4, bonusPerProject: 13 },
+    "Admin Sys": { incomePerSecond: 3, bonusPerProject: 10 },
     "Ingénieur Cloud": { incomePerSecond: 3, bonusPerProject: 14 },
     "Architecte Logiciel": { incomePerSecond: 4, bonusPerProject: 20 },
     "Responsable DevOps": { incomePerSecond: 5, bonusPerProject: 16 },
     "Consultant IT": { incomePerSecond: 3, bonusPerProject: 13 },
-    "Testeur QA": { incomePerSecond: 2, bonusPerProject: 7 },
+    "Testeur QA": { incomePerSecond: 2, bonusPerProject: 6 },
     "Product Owner": { incomePerSecond: 6, bonusPerProject: 14 },
-    "Chef de Projet Informatique": { incomePerSecond: 7, bonusPerProject: 15 },
+    "Chef de Projet Informatique": { incomePerSecond: 7, bonusPerProject: 21 },
     "Designer UX/UI": { incomePerSecond: 2, bonusPerProject: 9 },
 };
 
@@ -213,6 +216,9 @@ function applyForJob() {
     // Stop the countdown interval
     clearInterval(countdownInterval);
 
+    // Recalculate project bonus
+    recalculateProjectBonus();
+
     // Update the stats
     updateStats();
 
@@ -251,6 +257,9 @@ function removeJob(index) {
                 removeButtons[i].style.display = "none";
             }
         }
+
+        // Recalculate project bonus
+        recalculateProjectBonus();
 
         // Update the stats
         updateStats();
@@ -293,7 +302,7 @@ function takeQuickProject() {
             gameState.money += projectReward + totalBonus; // Add base reward + bonuses
             updateStats();
             // Show a summary of the reward
-            showAlert(`Quick Project completed! Base reward: $${projectReward}. Bonus from jobs: $${totalBonus}. Total: $${projectReward + totalBonus}`);
+            // showAlert(`Quick Project completed! Base reward: $${projectReward}. Bonus from jobs: $${totalBonus}. Total: $${projectReward + totalBonus}`);
         }, 7500);
 
     } else {
@@ -316,6 +325,16 @@ function startProject() {
         showAlert("Not enough money to start this project!");
     }
 }
+
+function recalculateProjectBonus() {
+    gameState.projectBonus = jobState.activeJobs.reduce((total, job) => {
+        return total + (jobProperties[job]?.bonusPerProject || 0);
+    }, 0);
+
+    // Update stats after recalculating
+    updateStats();
+}
+
 
 // --------------- Upgrade functions ---------------
 function upgradeComputer() {
