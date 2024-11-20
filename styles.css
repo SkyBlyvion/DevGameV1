@@ -1,4 +1,4 @@
-/* Global Styles */
+/* -------------- Global Styles -------------- */
 body {
     background-color: black;
     color: #0F0;
@@ -77,7 +77,7 @@ p {
 
 
 
-/* -------------- Optimized styles for the progressbar button */
+/* -------------- Optimized styles for the progressbar button -------------- */
 button {
     background-color: black;
     color: #0F0;
@@ -89,11 +89,6 @@ button {
     position: relative;
     overflow: hidden; /* Permet de contenir la barre à l'intérieur */
 }
-
-/* button:hover {
-    background-color: #0F0;
-    color: black;
-} */
 
 /* Hover effect only for devices that can hover */
 @media (hover: hover) and (pointer: fine) {
@@ -160,4 +155,28 @@ button {
     float: right;
     font-size: 1.5em;
     cursor: pointer;
+}
+
+/* ---------- Loader ---------- */
+
+/* Loader Container */
+#loader {
+    margin: 5px auto;
+    text-align: left;
+}
+
+/* Animated Loader */
+#loader svg {
+    width: 20px;
+    height: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

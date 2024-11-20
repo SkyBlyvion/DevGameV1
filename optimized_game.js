@@ -80,11 +80,19 @@ function searchForJobs() {
 
     //showAlert("Searching for a job...");
 
+    // Show loader
+    const loader = document.getElementById("loader");
+    loader.style.display = "block";
+
     // Clear any previous timeouts
     clearTimeout(jobState.searchTimeout);
     clearTimeout(jobState.displayTimeout);
 
     jobState.searchTimeout = setTimeout(() => {
+        
+        // Hide loader
+        loader.style.display = "none";
+
         // Determine if jobs are found or not
         if (Math.random() > failureChance) {
             // Randomly pick 1 job from the list
@@ -95,21 +103,36 @@ function searchForJobs() {
             //showAlert("No jobs found this time. Try searching again!");
         }
     }, searchDuration);
-}
 
-// Function to display the found job
+}
+let countdownInterval; // Global variable to store the interval ID
+
+// Function to display the found job// Function to display the found job
 function displayFoundJob() {
     const foundJobDiv = document.getElementById("found-job");
-    foundJobDiv.textContent = `Found Job: ${jobState.availableJobs[0]}`;
-    //alert("A job has been found! Apply within 15 seconds.");
+    const job = jobState.availableJobs[0]; // Get the found job
+    let remainingTime = 5; // Countdown starts at 5 seconds
 
-    // Clear the job after 15 seconds
-    jobState.displayTimeout = setTimeout(() => {
-        jobState.availableJobs = [];
-        foundJobDiv.textContent = "";
-        //showAlert("The job has disappeared. Search again to find new opportunities.");
-    }, 7500);
+    // Display the job with the initial time
+    foundJobDiv.textContent = `Found Job: ${job} - ${remainingTime}s`;
+
+    // Clear any existing interval to avoid duplicates
+    clearInterval(countdownInterval);
+
+    // Create an interval to update the countdown
+    countdownInterval = setInterval(() => {
+        remainingTime--; // Decrease the time by 1 second
+        foundJobDiv.textContent = `Found Job: ${job} - ${remainingTime}s`;
+
+        // If time runs out, clear the interval and remove the job
+        if (remainingTime <= 0) {
+            clearInterval(countdownInterval); // Stop the countdown
+            jobState.availableJobs = [];
+            foundJobDiv.textContent = ""; // Clear the displayed job
+        }
+    }, 1000); // Update every 1 second
 }
+
 
 // Function to apply for a job
 function applyForJob() {
@@ -124,6 +147,14 @@ function applyForJob() {
     }
 
     const job = jobState.availableJobs[0]; // Only one job can be available at a time
+
+    // Check if the job is already active
+    if (jobState.activeJobs.includes(job)) {
+        showAlert(`You already have : ${job}.<br><br> Remember, DRY (Don't Repeat Yourself)!`);
+        return;
+    }
+
+    // Add the job to the active jobs list
     jobState.activeJobs.push(job);
 
     // Update the job slots
@@ -139,6 +170,10 @@ function applyForJob() {
     // Clear the found job
     jobState.availableJobs = [];
     document.getElementById("found-job").textContent = "";
+
+    // Stop the countdown interval
+    clearInterval(countdownInterval);
+
     //showAlert(`You have successfully applied for: ${job}`);
 }
 
@@ -290,7 +325,9 @@ function updateLotteryStats() {
     document.getElementById("total-money-won").textContent = lotteryStats.totalMoneyWon.toFixed(2); // Update total money won
 }
 
+
 // --------------- Utility functions ---------------
+
 // Disable button with a timer
 function disableButton(buttonId, progressBarId, duration) {
     const button = document.getElementById(buttonId);
@@ -322,8 +359,8 @@ function showAlert(message) {
     const modalMessage = document.getElementById("modal-message");
     const closeModal = document.getElementById("close-modal");
 
-    // Set the message
-    modalMessage.textContent = message;
+    // Set the message using innerHTML to allow HTML formatting
+    modalMessage.innerHTML = message;
 
     // Show the modal
     modal.style.display = "flex";
