@@ -10,9 +10,9 @@ const gameState = {
     pulseInterval: null, // Store the interval ID
     
     elements: {
-        moneyDisplay: document.getElementById('money'),
-        moneyPerPulseDisplay: document.getElementById('money-per-pulse'),
-        pulseSpeedDisplay: document.getElementById('pulse-speed')
+        moneyDisplay: document.getElementById("money"),
+        moneyPerPulseDisplay: document.getElementById("money-per-pulse"),
+        pulseSpeedDisplay: document.getElementById("pulse-speed")
     }
 };
 
@@ -49,7 +49,7 @@ function startPulseLoop() {
 ///* eslint-disable-next-line no-unused-vars */
 function takeQuickProject() {
     if (gameState.money >= 10) {
-        disableButton('quick-project-btn', 'quick-project-progress', 7500);
+        disableButton("quick-project-btn", "quick-project-progress", 7500);
         gameState.money -= 10; // Deduct project cost immediately
         updateStats();
 
@@ -65,7 +65,7 @@ function takeQuickProject() {
 
 function startProject() {
     if (gameState.money >= 50) {
-        disableButton('start-project-btn', 'start-project-progress', 15000);
+        disableButton("start-project-btn", "start-project-progress", 15000);
         gameState.money -= 50; // Deduct project cost immediately
         updateStats();
 
@@ -82,7 +82,7 @@ function startProject() {
 // --------------- Upgrade functions ---------------
 function upgradeComputer() {
     if (gameState.money >= 100) {
-        disableButton('start-computer-btn', 'start-computer-progress', 120000);
+        disableButton("start-computer-btn", "start-computer-progress", 120000);
         gameState.money -= 100;
         gameState.moneyPerPulse += 1; // Increase money per pulse
         updateStats();
@@ -94,7 +94,7 @@ function upgradeComputer() {
 // --------------- Shop functions ---------------
 function buyCoffee() {
     if (gameState.money >= 5) {
-        disableButton('start-coffee-btn', 'start-coffee-progress', 120000);
+        disableButton("start-coffee-btn", "start-coffee-progress", 120000);
         gameState.money -= 5;
         gameState.moneyPerPulse *= 1.03; // Increase money rate by 3%
         updateStats();
@@ -105,7 +105,7 @@ function buyCoffee() {
 
 function buyEnergyDrink() {
     if (gameState.money >= 35) {
-        disableButton('start-energy-btn', 'start-energy-progress', 600000);
+        disableButton("start-energy-btn", "start-energy-progress", 600000);
         gameState.money -= 35;
         gameState.pulseSpeed = Math.max(100, gameState.pulseSpeed * 0.95); // Decrease pulse speed by 5%
         updateStats();
@@ -143,7 +143,7 @@ function disableButton(buttonId, progressBarId, duration) {
     const interval = 100; // Update every 100ms
     const step = 100 / (duration / interval);
 
-    progressBar.style.width = '0%';
+    progressBar.style.width = "0%";
 
     const countdown = setInterval(() => {
         progress += step;
@@ -152,7 +152,7 @@ function disableButton(buttonId, progressBarId, duration) {
         if (progress >= 100) {
             clearInterval(countdown);
             button.disabled = false;
-            progressBar.style.width = '0%';
+            progressBar.style.width = "0%";
         }
     }, interval);
 }

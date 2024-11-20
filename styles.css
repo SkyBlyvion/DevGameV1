@@ -1,7 +1,7 @@
 /* Global Styles */
 body {
     background-color: black;
-    color: #00FF00;
+    color: #0F0;
     font-family: "Courier New", Courier, monospace;
     display: flex;
     justify-content: center;
@@ -13,7 +13,7 @@ body {
 .game-container {
     width: 600px;
     padding: 20px;
-    border: 2px dashed #00FF00;
+    border: 2px dashed #0F0;
 }
 
 .header {
@@ -27,7 +27,7 @@ body {
 }
 
 .section {
-    border: 1px dotted #00FF00;
+    border: 1px dotted #0F0;
     padding: 10px;
     margin-bottom: 15px;
 }
@@ -35,7 +35,7 @@ body {
 h2 {
     font-size: 1.2em;
     margin-bottom: 8px;
-    color: #00FF00;
+    color: #0F0;
 }
 
 p {
@@ -46,8 +46,8 @@ p {
 /* -------------- Optimized styles for the progressbar button */
 button {
     background-color: black;
-    color: #00FF00;
-    border: 1px solid #00FF00;
+    color: #0F0;
+    border: 1px solid #0F0;
     padding: 10px 20px;
     margin-bottom: 10px;
     cursor: pointer;
@@ -57,26 +57,25 @@ button {
 }
 
 /* button:hover {
-    background-color: #00FF00;
+    background-color: #0F0;
     color: black;
 } */
 
 /* Hover effect only for devices that can hover */
 @media (hover: hover) and (pointer: fine) {
     button:hover {
-        background-color: #00FF00;
+        background-color: #0F0;
         color: black;
     }
 }
 
 .progress-container {
     position: absolute;
-    /* top: 0; */
     bottom: 0;
     left: 0;
     width: 100%;
     height: 20%;
-    background-color: rgba(0, 255, 0, 0.1); /* Couleur de fond léger pour la barre */
+    background-color: rgb(0 255 0 / 10%); /* Couleur de fond léger pour la barre */
     z-index: 1; /* Derrière le texte */
     overflow: hidden;
 }
@@ -87,7 +86,7 @@ button {
     left: 0;
     height: 100%;
     width: 0%; /* Commence à 0% */
-    background-color: rgba(0, 255, 0, 0.5); /* Couleur de la barre */
+    background-color: rgb(0 255 0 / 50%); /* Couleur de la barre */
     z-index: 2; /* Par-dessus le fond mais sous le texte */
     transition: width 0.1s linear;
 }
