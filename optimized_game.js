@@ -97,7 +97,6 @@ const jobProperties = {
     "Designer UX/UI": { incomePerSecond: 2, bonusPerProject: 9 },
 };
 
-
 // Game state for jobs
 const jobState = {
     availableJobs: [], // Jobs found during the search
@@ -170,7 +169,6 @@ function displayFoundJob() {
         }
     }, 1000); // Update every 1 second
 }
-
 
 // Function to apply for a job
 function applyForJob() {
@@ -281,6 +279,7 @@ removeButtons.forEach((button, index) => {
 
 
 // --------------- Project functions ---------------
+
 ///* eslint-disable-next-line no-unused-vars */
 function takeQuickProject() {
     if (gameState.money >= 10) {
@@ -301,7 +300,6 @@ function takeQuickProject() {
             const projectReward = 20; // Base reward for the quick project
             gameState.money += projectReward + totalBonus; // Add base reward + bonuses
             updateStats();
-            // Show a summary of the reward
             // showAlert(`Quick Project completed! Base reward: $${projectReward}. Bonus from jobs: $${totalBonus}. Total: $${projectReward + totalBonus}`);
         }, 7500);
 
@@ -312,13 +310,22 @@ function takeQuickProject() {
 
 function startProject() {
     if (gameState.money >= 50) {
+
         disableButton("start-project-btn", "start-project-progress", 15000);
         gameState.money -= 50; // Deduct project cost immediately
         updateStats();
 
         // Add the reward after 15 seconds
         setTimeout(() => {
-            gameState.money += 100; // Project reward
+            let totalBonus = 0;
+
+            // Calculate bonuses from active jobs
+            jobState.activeJobs.forEach((job) => {
+                totalBonus += jobProperties[job]?.bonusPerProject || 0;
+            });
+
+            const projectReward = 100; // Base reward for the quick project
+            gameState.money += projectReward + totalBonus; // Add base reward + bonuses
             updateStats();
         }, 15000);
     } else {
