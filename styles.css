@@ -44,6 +44,7 @@ p {
 }
 
 /* -------------- Jobs Section Styles -------------- */
+
 /* Job slots */
 .job-slot {
     font-weight: bold;
@@ -51,7 +52,7 @@ p {
 }
 
 /* Parent paragraph styling for alignment */
-.pJobs {
+.p-jobs {
     display: flex; /* Enable flexbox */
     align-items: center; /* Vertically align items */
     flex-wrap: nowrap; /* Prevent wrapping */
@@ -62,10 +63,9 @@ p {
 
 /* Remove job button () */
 .remove-job-btn {
-    margin-left: 5px;
     padding: 5px;
     margin: 5px;
-    background-color: rgba(0, 255, 0, 0.733); /* Highlight the remove button */
+    background-color: rgba(0 255 0 / 73.3%); /* Highlight the remove button */
     color: white;
     border: none;
     border-radius: 1px;
@@ -126,6 +126,7 @@ button {
 }
 
 /* ---------- Modal Container ---------- */
+
 /* Modal container */
 .modal {
     display: none; /* Hidden by default */
@@ -136,7 +137,7 @@ button {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    background-color: rgba(0 0 0 / 80%); /* Semi-transparent background */
     justify-content: center;
     align-items: center;
 }
@@ -150,7 +151,7 @@ button {
     border-radius: 5px;
     width: 300px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0 255 0 / 20%);
 }
 
 /* Close button */
