@@ -23,11 +23,14 @@ const gameState = {
 // Centralized updates to stats
 // Reduces the number of DOM updates by grouping them into a single function.
 function updateStats() {
-    const { money, moneyPerPulse, pulseSpeed, elements } = gameState;
+    const { money, moneyPerPulse, jobIncome, pulseSpeed, elements } = gameState;
+    const totalIncomePerSecond = moneyPerPulse + jobIncome;
+
     elements.moneyDisplay.textContent = money.toFixed(2); // Format money with 2 decimal places
-    elements.moneyPerPulseDisplay.textContent = moneyPerPulse.toFixed(2); // Format money per pulse
+    elements.moneyPerPulseDisplay.textContent = totalIncomePerSecond.toFixed(2); // Update total income display
     elements.pulseSpeedDisplay.textContent = `${pulseSpeed} ms`; // Pulse speed remains as is
 }
+
 
 // Earn money on pulse
 // function earnMoney() {
@@ -75,20 +78,20 @@ const jobList = [
 // Properties for each job
 const jobProperties = {
     "Dev Front-end": { incomePerSecond: 2, bonusPerProject: 8 },
-    "Dev Back-end": { incomePerSecond: 2.5, bonusPerProject: 10 },
-    "Dev Full Stack": { incomePerSecond: 3, bonusPerProject: 12 },
+    "Dev Back-end": { incomePerSecond: 3, bonusPerProject: 10 },
+    "Dev Full Stack": { incomePerSecond: 6, bonusPerProject: 12 },
     "Dev Mobile": { incomePerSecond: 2, bonusPerProject: 9 },
-    "Analyste Sécurité": { incomePerSecond: 3.5, bonusPerProject: 15 },
+    "Analyste Sécurité": { incomePerSecond: 3, bonusPerProject: 15 },
     "Data Scientist": { incomePerSecond: 4, bonusPerProject: 18 },
-    "Admin Sys": { incomePerSecond: 2.8, bonusPerProject: 11 },
-    "Ingénieur Cloud": { incomePerSecond: 3.2, bonusPerProject: 14 },
-    "Architecte Logiciel": { incomePerSecond: 4.5, bonusPerProject: 20 },
-    "Responsable DevOps": { incomePerSecond: 3.8, bonusPerProject: 16 },
-    "Consultant IT": { incomePerSecond: 3.1, bonusPerProject: 13 },
-    "Testeur QA": { incomePerSecond: 2.2, bonusPerProject: 7 },
-    "Product Owner": { incomePerSecond: 3.3, bonusPerProject: 14 },
-    "Chef de Projet Informatique": { incomePerSecond: 3.7, bonusPerProject: 15 },
-    "Designer UX/UI": { incomePerSecond: 2.6, bonusPerProject: 9 },
+    "Admin Sys": { incomePerSecond: 3, bonusPerProject: 11 },
+    "Ingénieur Cloud": { incomePerSecond: 3, bonusPerProject: 14 },
+    "Architecte Logiciel": { incomePerSecond: 4, bonusPerProject: 20 },
+    "Responsable DevOps": { incomePerSecond: 5, bonusPerProject: 16 },
+    "Consultant IT": { incomePerSecond: 3, bonusPerProject: 13 },
+    "Testeur QA": { incomePerSecond: 2, bonusPerProject: 7 },
+    "Product Owner": { incomePerSecond: 6, bonusPerProject: 14 },
+    "Chef de Projet Informatique": { incomePerSecond: 7, bonusPerProject: 15 },
+    "Designer UX/UI": { incomePerSecond: 2, bonusPerProject: 9 },
 };
 
 
@@ -210,25 +213,50 @@ function applyForJob() {
     // Stop the countdown interval
     clearInterval(countdownInterval);
 
+    // Update the stats
+    updateStats();
+
     //showAlert(`You have successfully applied for: ${job}`);
 }
 
 // Function to remove a job
 function removeJob(index) {
-
     const jobSlots = document.querySelectorAll(".job-slot");
     const removeButtons = document.querySelectorAll(".remove-job-btn");
 
-    // Get the job name and remove its income
-    const job = jobState.activeJobs[index];
-    if (job) {
-        gameState.jobIncome -= jobProperties[job].incomePerSecond;
-    }
+    // Validate if the index is within the bounds of active jobs
+    if (index >= 0 && index < jobState.activeJobs.length) {
+        // Get the job name and remove its income
+        const job = jobState.activeJobs[index];
+        if (job) {
+            gameState.jobIncome -= jobProperties[job].incomePerSecond || 0; // Safeguard if incomePerSecond is undefined
+        }
 
-    // Remove the job from active jobs and clear the slot
-    jobState.activeJobs.splice(index, 1);
-    jobSlots[index].textContent = "";
-    removeButtons[index].style.display = "none"; // Hide the remove button
+        // Remove the job from active jobs
+        jobState.activeJobs.splice(index, 1);
+
+        // Clear the corresponding slot
+        jobSlots[index].textContent = "";
+        removeButtons[index].style.display = "none"; // Hide the remove button
+
+        // Reorganize the remaining slots
+        for (let i = 0; i < jobSlots.length; i++) {
+            if (i < jobState.activeJobs.length) {
+                // Update slot content with remaining jobs
+                jobSlots[i].textContent = jobState.activeJobs[i];
+                removeButtons[i].style.display = "inline";
+            } else {
+                // Clear empty slots
+                jobSlots[i].textContent = "";
+                removeButtons[i].style.display = "none";
+            }
+        }
+
+        // Update the stats
+        updateStats();
+    } else {
+        console.error("Invalid job index for removal.");
+    }
 }
 
 // Attach event listeners to buttons
