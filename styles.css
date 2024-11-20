@@ -78,6 +78,7 @@ p {
 
 
 /* -------------- Optimized styles for the progressbar button -------------- */
+/* Base button styles */
 button {
     background-color: black;
     color: #0F0;
@@ -87,16 +88,25 @@ button {
     cursor: pointer;
     font-family: inherit;
     position: relative;
-    overflow: hidden; /* Permet de contenir la barre à l'intérieur */
+    overflow: hidden; /* Contain the progress bar inside */
+    transition: transform 0.1s ease, background-color 0.2s ease, color 0.2s ease; /* Smooth transitions */
 }
 
-/* Hover effect only for devices that can hover */
+/* Hover effect for devices that can hover */
 @media (hover: hover) and (pointer: fine) {
     button:hover {
         background-color: #0F0;
         color: black;
+        transform: scale(1.05); /* Slight zoom effect on hover */
     }
 }
+
+/* Click effect (active state) */
+button:active {
+    transform: scale(0.95); /* Shrink slightly */
+    background-color: #0C0; /* Slightly darker green during the click */
+}
+
 
 .progress-container {
     position: absolute;
