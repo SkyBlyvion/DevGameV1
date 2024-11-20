@@ -34,6 +34,7 @@ body {
 
 h2 {
     font-size: 1.2em;
+    margin-top: 5px;
     margin-bottom: 8px;
     color: #0F0;
 }
@@ -41,6 +42,39 @@ h2 {
 p {
     margin: 5px 0;
 }
+
+/* -------------- Jobs Section Styles -------------- */
+/* Job slots */
+.job-slot {
+    font-weight: bold;
+    color: #0F0; /* Green color to match the theme */
+}
+
+/* Parent paragraph styling for alignment */
+.pJobs {
+    display: flex; /* Enable flexbox */
+    align-items: center; /* Vertically align items */
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow: hidden; /* Prevent content overflow */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+    margin: 5px 0; /* Add spacing between jobs */
+}
+
+/* Remove job button () */
+.remove-job-btn {
+    margin-left: 5px;
+    padding: 5px;
+    margin: 5px;
+    background-color: rgba(0, 255, 0, 0.733); /* Highlight the remove button */
+    color: white;
+    border: none;
+    border-radius: 1px;
+    cursor: pointer;
+    font-size: 0.4em;
+    display: none; /* Hidden by default until a job is added */
+}
+
+
 
 
 /* -------------- Optimized styles for the progressbar button */

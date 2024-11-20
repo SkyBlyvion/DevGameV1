@@ -45,6 +45,126 @@ function startPulseLoop() {
     gameState.pulseInterval = setInterval(earnMoney, pulseSpeed);
 }
 
+// --------------- Job functions ---------------
+// List of jobs
+const jobList = [
+    "Dev Front-end",
+    "Dev Back-end",
+    "Dev Full Stack",
+    "Dev Mobile",
+    "Analyste Sécurité",
+    "Data Scientist",
+    "Admin Sys",
+    "Ingénieur Cloud",
+    "Architecte Logiciel",
+    "Responsable DevOps",
+];
+
+// Game state for jobs
+const jobState = {
+    availableJobs: [], // Jobs found during the search
+    activeJobs: [], // Jobs player has applied to (max 3)
+    searchTimeout: null, // Timeout for search duration
+    displayTimeout: null, // Timeout for job display duration
+};
+
+// Function to search for jobs
+function searchForJobs() {
+    if (jobState.availableJobs.length > 0) {
+        showAlert("A job is already available! Apply or wait for it to disappear.");
+        return;
+    }
+
+    const failureChance = 0.0; // Modifiable failure chance (30%)
+    const searchDuration = 1000; // Search takes 15 seconds (15000 ms)
+
+    //showAlert("Searching for a job...");
+
+    // Clear any previous timeouts
+    clearTimeout(jobState.searchTimeout);
+    clearTimeout(jobState.displayTimeout);
+
+    jobState.searchTimeout = setTimeout(() => {
+        // Determine if jobs are found or not
+        if (Math.random() > failureChance) {
+            // Randomly pick 1 job from the list
+            const shuffledJobs = jobList.sort(() => 0.5 - Math.random());
+            jobState.availableJobs = shuffledJobs.slice(0, 1); // Only one job
+            displayFoundJob();
+        } else {
+            //showAlert("No jobs found this time. Try searching again!");
+        }
+    }, searchDuration);
+}
+
+// Function to display the found job
+function displayFoundJob() {
+    const foundJobDiv = document.getElementById("found-job");
+    foundJobDiv.textContent = `Found Job: ${jobState.availableJobs[0]}`;
+    //alert("A job has been found! Apply within 15 seconds.");
+
+    // Clear the job after 15 seconds
+    jobState.displayTimeout = setTimeout(() => {
+        jobState.availableJobs = [];
+        foundJobDiv.textContent = "";
+        //showAlert("The job has disappeared. Search again to find new opportunities.");
+    }, 7500);
+}
+
+// Function to apply for a job
+function applyForJob() {
+    if (jobState.availableJobs.length === 0) {
+        showAlert("No jobs are available! Search for a job first.");
+        return;
+    }
+
+    if (jobState.activeJobs.length >= 3) {
+        showAlert("You already have the maximum number of jobs (3).");
+        return;
+    }
+
+    const job = jobState.availableJobs[0]; // Only one job can be available at a time
+    jobState.activeJobs.push(job);
+
+    // Update the job slots
+    const jobSlots = document.querySelectorAll(".job-slot");
+    for (let i = 0; i < jobSlots.length; i++) {
+        if (jobSlots[i].textContent === "") {
+            jobSlots[i].textContent = job;
+            jobSlots[i].nextElementSibling.style.display = "inline"; // Show remove button
+            break;
+        }
+    }
+
+    // Clear the found job
+    jobState.availableJobs = [];
+    document.getElementById("found-job").textContent = "";
+    //showAlert(`You have successfully applied for: ${job}`);
+}
+
+// Function to remove a job
+function removeJob(index) {
+    const jobSlots = document.querySelectorAll(".job-slot");
+    const removeButtons = document.querySelectorAll(".remove-job-btn");
+
+    // Remove the job from active jobs and clear the slot
+    jobState.activeJobs.splice(index, 1);
+    jobSlots[index].textContent = "";
+    removeButtons[index].style.display = "none"; // Hide the remove button
+}
+
+// Attach event listeners to buttons
+document.getElementById("search-job-btn").addEventListener("click", searchForJobs);
+document.getElementById("apply-job-btn").addEventListener("click", applyForJob);
+
+const removeButtons = document.querySelectorAll(".remove-job-btn");
+removeButtons.forEach((button, index) => {
+    button.addEventListener("click", () => removeJob(index));
+});
+
+
+
+
 // --------------- Project functions ---------------
 ///* eslint-disable-next-line no-unused-vars */
 function takeQuickProject() {
@@ -116,20 +236,58 @@ function buyEnergyDrink() {
 }
 
 // --------------- Lottery functions ---------------
+// Lottery stats to track user engagement
+const lotteryStats = {
+    ticketsBought: 0,
+    moneySpent: 0,
+    wins: 0,
+    losses: 0,
+    totalMoneyWon: 0, // Total money won from lottery
+};
+
 function buyLotteryTicket() {
-    if (gameState.money >= 1) {
-        gameState.money -= 1;
-        if (Math.random() < 0.05) { // 5% win chance
-            const prize = 100;
-            gameState.money += prize;
-            showAlert("You won the lottery! Prize: $" + prize);
+    const ticketPrice = 1; // Cost of one ticket
+    const winChance = 0.05; // 5% win chance
+    const grandPrize = 100; // Grand prize for a win
+    const consolationPrize = 2; // Small reward for losing (optional)
+
+    if (gameState.money >= ticketPrice) {
+        // Deduct ticket price and update stats
+        gameState.money -= ticketPrice;
+        lotteryStats.ticketsBought++;
+        lotteryStats.moneySpent += ticketPrice;
+
+        // Determine the result
+        if (Math.random() < winChance) {
+            // Player wins the lottery
+            gameState.money += grandPrize;
+            lotteryStats.wins++;
+            lotteryStats.totalMoneyWon += grandPrize; // Update total money won
+            showAlert(`🎉 Congratulations! You won the lottery! Prize: $${grandPrize}.`);
         } else {
-            showAlert("You didn't win the lottery this time.");
+            // Player loses the lottery
+            gameState.money += consolationPrize; // Optional small consolation prize
+            lotteryStats.losses++;
+            //showAlert(`😢 Sorry, you didn't win the lottery this time. Here's a compensation: $${consolationPrize}.`);
         }
-        updateStats();
+
+        // Update the win percentage display
+        updateLotteryStats();
+        updateStats(); // Refresh money display
     } else {
         showAlert("Not enough money for a lottery ticket!");
     }
+}
+
+// Helper function to update lottery stats on the UI
+function updateLotteryStats() {
+    const winPercent = lotteryStats.wins > 0
+        ? ((lotteryStats.wins / lotteryStats.ticketsBought) * 100).toFixed(2)
+        : 0;
+
+    document.getElementById("money-spent").textContent = lotteryStats.moneySpent.toFixed(2);
+    document.getElementById("win-percent").textContent = `${winPercent}%`;
+    document.getElementById("total-money-won").textContent = lotteryStats.totalMoneyWon.toFixed(2); // Update total money won
 }
 
 // --------------- Utility functions ---------------

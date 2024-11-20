@@ -11,9 +11,10 @@
 </head>
 <body>
     <div class="game-container">
-        <h1 class="header">-=| devGame Intranet CONSOLE v3.14159|=-</h1>
+        <h1 class="header">-=| Intranet CONSOLE |=-</h1>
         <p class="intro">Welcome to devGame. Are you the best developper ?</p>
 
+        <!-- Stats -->
         <div class="section" id="stats">
             <h2>Stats</h2>
             <p>Money: <span id="money">100</span></p>
@@ -21,6 +22,18 @@
             <p>Pulse speed: <span id="pulse-speed">1000 ms</span></p>
         </div>
 
+        <!-- Jobs -->
+        <div class="section" id="jobs">
+            <h2>Jobs</h2>
+            <button id="search-job-btn">Search for a job</button>
+            <button id="apply-job-btn">Apply for a job</button>
+            <div id="found-job" style="margin-top: 10px; font-weight: bold;"></div> <!-- Found job -->
+            <p class="pJobs">Job 1:&nbsp;<span class="job-slot"></span> <button class="remove-job-btn" >❌</button></p>
+            <p class="pJobs">Job 2:&nbsp;<span class="job-slot"></span> <button class="remove-job-btn" >❌</button></p>
+            <p class="pJobs">Job 3:&nbsp;<span class="job-slot"></span> <button class="remove-job-btn" >❌</button></p>
+        </div>
+        
+        <!-- Projects -->
         <div class="section" id="projects">
             <h2>Projects</h2>
         
@@ -53,7 +66,7 @@
             </div>
         </div>
         
-
+        <!-- Shop -->
         <div class="section" id="shop">
             <h2>Shop</h2>
 
@@ -73,14 +86,17 @@
             </button>
         </div>
 
+        <!-- Lottery -->
         <div class="section" id="lottery">
             <h2>Lottery</h2>
             <button onclick="buyLotteryTicket()">Buy a ticket (1$)</button>
             <p>Money spent: <span id="money-spent">0</span></p>
+            <p>Money won: <span id="total-money-won">0</span></p>
             <p>Win percent: <span id="win-percent">0%</span></p>
         </div>
 
     </div>
+
 
     <!-- Custom Modal -->
     <div id="alert-modal" class="modal">
