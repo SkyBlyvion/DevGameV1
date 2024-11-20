@@ -7,6 +7,7 @@ const gameState = {
     money: 100,
     moneyPerPulse: 1,
     pulseSpeed: 1000, // in milliseconds
+    jobIncome: 0, // Income generated from active jobs per second
     pulseInterval: null, // Store the interval ID
     
     elements: {
@@ -29,10 +30,16 @@ function updateStats() {
 }
 
 // Earn money on pulse
+// function earnMoney() {
+//     gameState.money += gameState.moneyPerPulse;
+//     updateStats();
+// }
+
 function earnMoney() {
-    gameState.money += gameState.moneyPerPulse;
+    gameState.money += gameState.moneyPerPulse + gameState.jobIncome / (1000 / gameState.pulseSpeed);
     updateStats();
 }
+
 
 // Start or restart the pulse loop
 function startPulseLoop() {
@@ -58,7 +65,32 @@ const jobList = [
     "Ingénieur Cloud",
     "Architecte Logiciel",
     "Responsable DevOps",
+    "Consultant IT",
+    "Testeur QA",
+    "Product Owner",
+    "Chef de Projet Informatique",
+    "Designer UX/UI"
 ];
+
+// Properties for each job
+const jobProperties = {
+    "Dev Front-end": { incomePerSecond: 2, bonusPerProject: 8 },
+    "Dev Back-end": { incomePerSecond: 2.5, bonusPerProject: 10 },
+    "Dev Full Stack": { incomePerSecond: 3, bonusPerProject: 12 },
+    "Dev Mobile": { incomePerSecond: 2, bonusPerProject: 9 },
+    "Analyste Sécurité": { incomePerSecond: 3.5, bonusPerProject: 15 },
+    "Data Scientist": { incomePerSecond: 4, bonusPerProject: 18 },
+    "Admin Sys": { incomePerSecond: 2.8, bonusPerProject: 11 },
+    "Ingénieur Cloud": { incomePerSecond: 3.2, bonusPerProject: 14 },
+    "Architecte Logiciel": { incomePerSecond: 4.5, bonusPerProject: 20 },
+    "Responsable DevOps": { incomePerSecond: 3.8, bonusPerProject: 16 },
+    "Consultant IT": { incomePerSecond: 3.1, bonusPerProject: 13 },
+    "Testeur QA": { incomePerSecond: 2.2, bonusPerProject: 7 },
+    "Product Owner": { incomePerSecond: 3.3, bonusPerProject: 14 },
+    "Chef de Projet Informatique": { incomePerSecond: 3.7, bonusPerProject: 15 },
+    "Designer UX/UI": { incomePerSecond: 2.6, bonusPerProject: 9 },
+};
+
 
 // Game state for jobs
 const jobState = {
@@ -111,7 +143,7 @@ let countdownInterval; // Global variable to store the interval ID
 function displayFoundJob() {
     const foundJobDiv = document.getElementById("found-job");
     const job = jobState.availableJobs[0]; // Get the found job
-    let remainingTime = 5; // Countdown starts at 5 seconds
+    let remainingTime = 10; // Countdown starts at 10 seconds
 
     // Display the job with the initial time
     foundJobDiv.textContent = `Found Job: ${job} - ${remainingTime}s`;
@@ -157,6 +189,10 @@ function applyForJob() {
     // Add the job to the active jobs list
     jobState.activeJobs.push(job);
 
+    // Add job income to the game state
+    const { incomePerSecond } = jobProperties[job];
+    gameState.jobIncome += incomePerSecond;
+
     // Update the job slots
     const jobSlots = document.querySelectorAll(".job-slot");
     for (let i = 0; i < jobSlots.length; i++) {
@@ -179,8 +215,15 @@ function applyForJob() {
 
 // Function to remove a job
 function removeJob(index) {
+
     const jobSlots = document.querySelectorAll(".job-slot");
     const removeButtons = document.querySelectorAll(".remove-job-btn");
+
+    // Get the job name and remove its income
+    const job = jobState.activeJobs[index];
+    if (job) {
+        gameState.jobIncome -= jobProperties[job].incomePerSecond;
+    }
 
     // Remove the job from active jobs and clear the slot
     jobState.activeJobs.splice(index, 1);
@@ -204,15 +247,27 @@ removeButtons.forEach((button, index) => {
 ///* eslint-disable-next-line no-unused-vars */
 function takeQuickProject() {
     if (gameState.money >= 10) {
+
         disableButton("quick-project-btn", "quick-project-progress", 7500);
         gameState.money -= 10; // Deduct project cost immediately
         updateStats();
 
         // Add the reward after 15 seconds
         setTimeout(() => {
-            gameState.money += 20; // Quick project reward
+            let totalBonus = 0;
+
+            // Calculate bonuses from active jobs
+            jobState.activeJobs.forEach((job) => {
+                totalBonus += jobProperties[job]?.bonusPerProject || 0;
+            });
+
+            const projectReward = 20; // Base reward for the quick project
+            gameState.money += projectReward + totalBonus; // Add base reward + bonuses
             updateStats();
+            // Show a summary of the reward
+            showAlert(`Quick Project completed! Base reward: $${projectReward}. Bonus from jobs: $${totalBonus}. Total: $${projectReward + totalBonus}`);
         }, 7500);
+
     } else {
         showAlert("Not enough money for this project!");
     }
