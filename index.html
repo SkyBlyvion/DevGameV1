@@ -139,17 +139,35 @@
     </div>
 
     <!-- Settings Modal -->
-    <div id="settings-modal" >
+    <div id="settings-modal">
         <div class="modal-content">
             <span id="close-settings-modal" class="close-button">&times;</span>
             <h2>Settings</h2>
-            <button id="save-game-btn">Save Game</button>
-            <button id="export-game-btn">Export Game</button>
-            <input id="import-game-input" type="file" style="display: none;" />
-            <button id="import-game-btn">Import Game</button>
-            <button id="reset-game-btn">Reset Game</button>
+            <div class="settings-actions">
+                <h3>Game Management</h3>
+                <button id="import-game-btn">📂 Import Game</button>
+                <input id="import-game-input" type="file" style="display: none;" />
+                <button id="export-game-btn">💾 Export Game</button>
+                <button id="save-game-btn">💾 Save Game</button>
+            </div>
+            <div class="reset-section">
+                <h3 style="color: red;">Danger Zone</h3>
+                <button id="reset-game-btn" style="background-color: #F00; color: white;">❌ Reset Game</button>
+            </div>
+            <hr />
+            <!-- Developer Info -->
+            <div class="developer-info">
+                <h3>About</h3>
+                <p>© 2024 SkyBlyvion</p>
+                <p>License: <a href="https://opensource.org/licenses/MIT" target="_blank" style="color: #0F0; text-decoration: none;">MIT</a></p>
+                <p>
+                    GitHub: <a href="https://github.com/SkyBlyvion" target="_blank" style="color: #0F0; text-decoration: none;">SkyBlyvion</a>
+                </p>
+                <p style="font-size: 0.8em;">This game is provided "AS IS" without warranty of any kind.</p>
+            </div>
         </div>
     </div>
+
 
     <!-- <script src="script.js"></script> -->
     <script src="optimized_game.js"></script>
