@@ -489,13 +489,27 @@ function showAlert(message) {
 
 
 // --------------- Menu ---------------
-
+// Function to handle menu toggle
 document.getElementById("settings-icon").addEventListener("click", () => {
-    document.getElementById("settings-modal").style.display = "flex";
+    const settingsModal = document.getElementById("settings-modal");
+    settingsModal.style.display = "flex";
 });
+
+// Close settings modal
 document.getElementById("close-settings-modal").addEventListener("click", () => {
     document.getElementById("settings-modal").style.display = "none";
 });
+
+// Close the modal when clicking outside the modal content
+window.addEventListener("click", (event) => {
+    const settingsModal = document.getElementById("settings-modal");
+    const modalContent = document.querySelector(".modal-content");
+    if (settingsModal.style.display === "flex" && !modalContent.contains(event.target) && event.target !== document.getElementById("settings-icon")) {
+        settingsModal.style.display = "none";
+    }
+});
+
+// Save and load game
 document.getElementById("save-game-btn").addEventListener("click", saveGame);
 document.getElementById("export-game-btn").addEventListener("click", exportGame);
 document.getElementById("import-game-btn").addEventListener("click", () => {
