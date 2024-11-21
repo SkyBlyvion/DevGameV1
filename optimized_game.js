@@ -488,6 +488,140 @@ function showAlert(message) {
 }
 
 
+// --------------- Menu ---------------
+
+document.getElementById("settings-icon").addEventListener("click", () => {
+    document.getElementById("settings-modal").style.display = "flex";
+});
+document.getElementById("close-settings-modal").addEventListener("click", () => {
+    document.getElementById("settings-modal").style.display = "none";
+});
+document.getElementById("save-game-btn").addEventListener("click", saveGame);
+document.getElementById("export-game-btn").addEventListener("click", exportGame);
+document.getElementById("import-game-btn").addEventListener("click", () => {
+    document.getElementById("import-game-input").click();
+});
+document.getElementById("import-game-input").addEventListener("change", importGame);
+document.getElementById("reset-game-btn").addEventListener("click", () => {
+    if (confirm("Are you sure you want to reset your progress?")) {
+        localStorage.removeItem("devGameSave");
+        location.reload();
+    }
+});
+
+function saveGame() {
+    const saveData = {
+        money: gameState.money,
+        moneyPerPulse: gameState.moneyPerPulse,
+        pulseSpeed: gameState.pulseSpeed,
+        jobIncome: gameState.jobIncome,
+        projectBonus: gameState.projectBonus,
+        activeJobs: [...jobState.activeJobs]
+    };
+
+    localStorage.setItem("devGameSave", JSON.stringify(saveData));
+    //showAlert("Game saved successfully!");
+}
+
+function loadGame() {
+    const savedData = JSON.parse(localStorage.getItem("devGameSave"));
+    if (savedData) {
+        gameState.money = savedData.money || 0;
+        gameState.moneyPerPulse = savedData.moneyPerPulse || 1;
+        gameState.pulseSpeed = savedData.pulseSpeed || 1000;
+        gameState.jobIncome = savedData.jobIncome || 0;
+        gameState.projectBonus = savedData.projectBonus || 0;
+        jobState.activeJobs = savedData.activeJobs || [];
+
+        // Update UI to reflect loaded data
+        updateStats();
+        jobState.activeJobs.forEach((job, index) => {
+            const jobSlots = document.querySelectorAll(".job-slot");
+            const removeButtons = document.querySelectorAll(".remove-job-btn");
+            jobSlots[index].textContent = job;
+            removeButtons[index].style.display = "inline";
+        });
+    } else {
+        showAlert("No saved game found!");
+    }
+}
+
+function importGame(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const importedData = JSON.parse(e.target.result);
+            if (importedData) {
+                gameState.money = importedData.money || 0;
+                gameState.moneyPerPulse = importedData.moneyPerPulse || 1;
+                gameState.pulseSpeed = importedData.pulseSpeed || 1000;
+                gameState.jobIncome = importedData.jobIncome || 0;
+                gameState.projectBonus = importedData.projectBonus || 0;
+                jobState.activeJobs = importedData.activeJobs || [];
+
+                // Update UI
+                updateStats();
+                jobState.activeJobs.forEach((job, index) => {
+                    const jobSlots = document.querySelectorAll(".job-slot");
+                    const removeButtons = document.querySelectorAll(".remove-job-btn");
+                    jobSlots[index].textContent = job;
+                    removeButtons[index].style.display = "inline";
+                });
+
+                showAlert("Game imported successfully!");
+            }
+        };
+        reader.readAsText(file);
+    }
+}
+
+function exportGame() {
+    const saveData = JSON.stringify({
+        money: gameState.money,
+        moneyPerPulse: gameState.moneyPerPulse,
+        pulseSpeed: gameState.pulseSpeed,
+        jobIncome: gameState.jobIncome,
+        projectBonus: gameState.projectBonus,
+        activeJobs: [...jobState.activeJobs]
+    });
+
+    const blob = new Blob([saveData], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "devGameSave.json";
+    a.click();
+    URL.revokeObjectURL(url);
+    showAlert("Game exported successfully!");
+}
+
+
+// --------------- Game Initialization Stays at the end of .js file ---------------
+
+// Load the game on page load
+loadGame();
+
 // Initialize display and game loop
 updateStats();
 startPulseLoop();
+
+// Autosave every 30 seconds
+setInterval(() => {
+    saveGame();
+    const autosaveNotification = document.getElementById("autosave-notification");
+
+    if (autosaveNotification) {
+        // Reset and display the notification
+        autosaveNotification.style.opacity = "1"; // Ensure it's visible
+        autosaveNotification.textContent = "Game autosaved successfully!";
+        
+        // Clear the notification after 3 seconds
+        setTimeout(() => {
+            autosaveNotification.style.opacity = "0"; // Hide the notification smoothly
+        }, 1000); // Clear after 3 seconds
+    }
+
+    console.log("Game autosaved successfully!");
+}, 5000); // Autosave every 30 seconds
+
