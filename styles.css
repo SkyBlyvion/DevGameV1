@@ -227,6 +227,7 @@ button:active {
 #settings-modal {
     display: none; 
     position: fixed;
+    top: 10%;
     z-index: 1000; 
     background-color: black;
     color: #0F0;
@@ -278,39 +279,6 @@ button:active {
     background-color: darkred;
 }
 
-
-/* ----------- Developer Info ----------- */
-
-/* Developer Info Styling */
-/* .developer-info {
-    margin-top: 10px;
-    margin-bottom: 0px;
-    border-top: 1px solid #0F0;
-    padding-top: 5px;
-}
-
-.developer-info h3 {
-    margin-bottom: 5px;
-    margin-top: 5px;
-    color: #0F0;
-    font-size: 1.1em;
-}
-
-.developer-info p {
-    /* text-align: left; */
-    /* margin: 5px 0;
-    color: #0F0;
-    font-size: 0.9em; */
-/* }
-
-.developer-info a {
-    color: #0F0;
-    text-decoration: none;
-}
-
-.developer-info a:hover {
-    text-decoration: underline;
-} */ 
 
 
 
