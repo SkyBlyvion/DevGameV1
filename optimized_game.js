@@ -509,6 +509,7 @@ document.getElementById("reset-game-btn").addEventListener("click", () => {
     }
 });
 
+/* {"money":4290,"moneyPerPulse":1,"pulseSpeed":1000,"jobIncome":0,"projectBonus":0,"activeJobs":[]} */
 function saveGame() {
     const saveData = {
         money: gameState.money,
@@ -623,5 +624,5 @@ setInterval(() => {
     }
 
     console.log("Game autosaved successfully!");
-}, 5000); // Autosave every 30 seconds
+}, 30000); // Autosave every 30 seconds
 
