@@ -619,6 +619,58 @@ loadGame();
 updateStats();
 startPulseLoop();
 
+// Log Dom Node Count
+function logDomNodeCount() {
+    console.log("Total DOM nodes:", document.getElementsByTagName("*").length);
+}
+setInterval(logDomNodeCount, 10000); // Log every 5 seconds
+
+
+//FPS Counter
+let lastFrameTime = performance.now();
+let fpsValues = []; // Array to store FPS values
+
+function calculateFPS() {
+    const now = performance.now();
+    const fps = Math.round(1000 / (now - lastFrameTime));
+    fpsValues.push(fps); // Store the current FPS
+    lastFrameTime = now;
+    requestAnimationFrame(calculateFPS);
+}
+
+// Function to log average FPS every 5 seconds
+function logAverageFPS() {
+    if (fpsValues.length > 0) {
+        const averageFPS = Math.round(fpsValues.reduce((sum, fps) => sum + fps, 0) / fpsValues.length);
+        console.log("Average FPS (last 5 seconds):", averageFPS);
+        fpsValues = []; // Clear the array for the next interval
+    }
+}
+
+// Start the FPS counter and logging
+requestAnimationFrame(calculateFPS);
+setInterval(logAverageFPS, 10000); // Log average FPS every 5 seconds
+
+
+function logPerformanceMetrics() {
+    const timing = performance.timing;
+    console.log("Time to Interactive:", timing.domInteractive - timing.navigationStart, "ms");
+    console.log("Load Time:", timing.loadEventEnd - timing.navigationStart, "ms");
+}
+setInterval(logPerformanceMetrics, 10000);
+
+
+// function logMemoryUsage() {
+//     if (performance.memory) {
+//         console.log(`JS Heap: ${Math.round(performance.memory.usedJSHeapSize / 1024 / 1024)} MB`);
+//     } else {
+//         console.log("Memory API not supported in this browser.");
+//     }
+// }
+// setInterval(logMemoryUsage, 10000); // Log every 10 seconds
+
+
+
 // Autosave every 30 seconds
 setInterval(() => {
     saveGame();
