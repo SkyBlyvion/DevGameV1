@@ -95,3 +95,10 @@ Menu
         License : MIT
         Github : SkyBlyvion
         Provided "AS IS"
+
+Build : 
+    Linters for code quality
+        .html
+        .css
+        .js
+            - npm run lint
