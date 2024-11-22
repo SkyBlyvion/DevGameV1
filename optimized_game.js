@@ -276,8 +276,6 @@ removeButtons.forEach((button, index) => {
 });
 
 
-
-
 // --------------- Project functions ---------------
 
 ///* eslint-disable-next-line no-unused-vars */

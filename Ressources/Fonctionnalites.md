@@ -21,7 +21,24 @@ Statistiques
         Argent par pulse : Voir combien d'argent est gagné à chaque pulse.
         Vitesse du pulse : Voir l'intervalle de temps entre chaque pulse.
         
+Recherche d'Emploi 
+
+    Rechercher un emploi :
+        Action : Cliquer sur le bouton "Search for a job" dans la nouvelle section en dessous des statistiques.
+        Emplois disponibles :
+            Développeur Front-end
+            Développeur Back-end
+            Développeur Full Stack
+            Analyste Sécurité
+            ...
+        Limitation : Le joueur peut avoir jusqu'à 3 emplois en même temps.
+        Effets :
+            Chaque emploi offre des bonus spécifiques (ex : augmentation de l'argent par pulse + bonus projets .) 
+            [Non implementé accès à des projets spéciaux, etc..]
+
 Projets
+
+    Bonus from Jobs : Les emplois augmentent l'argent gagné par project en fonction du job
 
     Prendre un projet rapide :
         Action : Cliquer sur le bouton "Take Quick Project".
@@ -40,7 +57,7 @@ Améliorations
     Améliorer l'ordinateur :
         Action : Cliquer sur le bouton "Upgrade Computer".
         Coût : 100$.
-        Effet : Augmente l'argent gagné par pulse de +1.
+        Effet : Augmente l'argent gagné par pulse de +1 (+1 Pulse).
 
 Boutique
 
@@ -64,3 +81,17 @@ Loterie
         Statistiques :
             Argent dépensé : Suivi du total dépensé en loterie.
             Pourcentage de gain : Calcul du ratio de gains par rapport aux dépenses.
+
+Menu
+
+    Game Management:
+        Save game to json
+        Import game from json
+        Export game to json
+        Reset game
+
+    About : 
+        Copyright : 2024 SkyBlyvion
+        License : MIT
+        Github : SkyBlyvion
+        Provided "AS IS"

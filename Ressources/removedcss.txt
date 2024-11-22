@@ -1,33 +1,299 @@
-EMOVED CSS : 
+voici la liste de mes functions JS, sans le code, seulement les functions : 
 
-/* .timer {
-    height: 10px;
-    width: 100%;
-    background-color: #333;
-    border: 1px solid #00FF00;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    position: relative;
-} */
+// ---------- Liste des Fonctions ----------
 
-/* .progress-bar {
-    height: 100%;
-    width: 0%;
-    background-color: #00FF00;
-    transition: width 0.1s linear;
-} */
+const gameState = {}
 
-/* button {
-    background-color: black;
-    color: #00FF00;
-    border: 1px solid #00FF00;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-family: inherit;
-}
 
-button:hover {
-    background-color: #00FF00;
-    color: black;
-} */
+// Stats
 
+function updateStats() {}
+
+function earnMoney() {}
+
+function startPulseLoop() {}
+
+
+// Jobs 
+
+const jobList = [ ]
+
+const jobProperties = { }
+
+const jobState = { }
+
+function searchForJobs() {}
+
+function applyForJob() {}
+
+function removeJob() {}
+
+
+// Projects
+
+function takeQuickProject() {}
+
+function startProject() {}
+
+function recalculateProjectBonus() {}
+
+
+// Upgrade Functions
+
+function upgradeComputer() {}
+
+
+// Shop Functions
+
+function buyCoffee() {}
+
+function buyEnergyDrink() {}
+
+
+// Lottery Functions
+const lotteryStats = { }
+
+function buyLotteryTicket() {}
+
+function updateLotteryStats() {}
+
+
+// Utility Functions
+
+function disableButton() {}
+
+function showAlert() {}
+
+
+// Menu Functions
+
+function saveGame() {}
+
+function loadGame() {}
+
+function importGame(event) {}
+
+function exportGame() {}
+
+// Game Initialization 
+
+// Load the game on page load
+loadGame();
+
+// Initialize display and game loop
+updateStats();
+startPulseLoop();
+
+// Autosave every 30 seconds
+setInterval(() => {
+    saveGame();
+}, 30000); 
+
+Voici le html : 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Incremental Game</title>
+    <!-- Styles css-->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg" href="Images/greensphere.svg">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Autosave Notification -->
+        <div id="autosave-notification"></div>
+        <!-- Gear Icon for Settings -->
+        <div id="settings-icon" >
+            ⚙️
+        </div>
+        <h1 class="header">-=| Intranet CONSOLE |=-</h1>
+        <p class="intro">Welcome to devGame. Are you the best developper ?</p>
+
+        <!-- Stats -->
+        <div class="section" id="stats">
+            <h2>Stats</h2>
+            <p>Money: <span id="money">100</span></p>
+            <p>Money per pulse: <span id="money-per-pulse">1</span></p>
+            <p>Pulse speed: <span id="pulse-speed">1000 ms</span></p>
+        </div>
+
+        <!-- Jobs -->
+        <div class="section" id="jobs">
+
+            <h2>Jobs -- <span id="job-bonus"></span></h2>
+
+            <button id="search-job-btn">Search for a job</button>
+
+            <button id="apply-job-btn">Apply for a job</button>
+
+            <div id="loader" style="display: none; margin-top: 10px; text-align: left;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50" fill="#0F0">
+                    <circle cx="25" cy="25" r="20" stroke="#0F0" stroke-width="4" fill="none" stroke-dasharray="125" stroke-dashoffset="0">
+                        <animate attributeType="XML" attributeName="transform" type="rotate" begin="0s" dur="1s" repeatCount="indefinite" from="0 25 25" to="360 25 25" />
+                        <animate attributeName="stroke-dashoffset" begin="0s" dur="1s" repeatCount="indefinite" values="0;125" />
+                    </circle>
+                </svg>
+            </div>
+            
+            <div id="found-job" style="margin-top: 10px; font-weight: bold;"></div> <!-- Found job -->
+            
+            <p class="p-jobs">Job 1:&nbsp;<span class="job-slot"></span> <button class="remove-job-btn" >❌</button></p>
+            <p class="p-jobs">Job 2:&nbsp;<span class="job-slot"></span> <button class="remove-job-btn" >❌</button></p>
+            <p class="p-jobs">Job 3:&nbsp;<span class="job-slot"></span> <button class="remove-job-btn" >❌</button></p>
+        </div>
+        
+        <!-- Projects -->
+        <div class="section" id="projects">
+            <h2>Projects -- Bonus from jobs: <span id="project-bonus">0 $</span></h2>
+        
+            <button id="quick-project-btn" onclick="takeQuickProject()">
+                <div class="progress-container">
+                    <div class="progress-bar" id="quick-project-progress"></div>
+                </div>
+                Take Quick Project: -$10, +$20
+            </button>
+        
+            <button id="start-project-btn" onclick="startProject()">
+                <div class="progress-container">
+                    <div class="progress-bar" id="start-project-progress"></div>
+                </div>
+                Start Project: -$50, +$100
+            </button>
+
+        </div>
+
+        <!-- Improvements -->
+        <div class="section" id="improvements">
+            <h2>Improvements</h2>
+
+            <div>
+                <button id="start-computer-btn" onclick="upgradeComputer()">
+                    <div class="progress-container">
+                        <div class="progress-bar" id="start-computer-progress"></div>
+                    </div>
+                    Upgrade computer: +1 Pulse -100 $
+                </button>
+            </div>
+        </div>
+        
+        <!-- Shop -->
+        <div class="section" id="shop">
+            <h2>Shop</h2>
+
+            <button id="start-coffee-btn" onclick="buyCoffee()">
+                <div class="progress-container">
+                    <div class="progress-bar" id="start-coffee-progress"></div>
+                </div>
+                Buy Coffee: -$5 (+3% rate)
+            </button>
+            
+
+            <button id="start-energy-btn" onclick="buyEnergyDrink()">
+                <div class="progress-container">
+                    <div class="progress-bar" id="start-energy-progress"></div>
+                </div>
+                Buy Energy Drink: -$35 (+0.75x speed)
+            </button>
+        </div>
+
+        <!-- Lottery -->
+        <div class="section" id="lottery">
+            <h2>Lottery</h2>
+            <button onclick="buyLotteryTicket()">Buy a ticket (1$)</button>
+            <p>Money spent: <span id="money-spent">0</span></p>
+            <p>Money won: <span id="total-money-won">0</span></p>
+            <p>Win percent: <span id="win-percent">0%</span></p>
+        </div>
+
+        <div class="section" id="todo">
+            <h2>TODO:</h2>
+            <button>accès à 1 ou 2 projets spéciaux pour chaque job</button>
+            <button>Débloquer une console in game</button>
+        </div>
+
+    </div>
+
+
+    <!-- Custom Modal -->
+    <div id="alert-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close-button">&times;</span>
+            <p id="modal-message">This is a custom alert!</p>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal">
+        <div class="modal-content">
+            <span id="close-settings-modal" class="close-button">&times;</span>
+            <h2>Settings</h2>
+            <div class="settings-actions">
+                <h3>Game Management</h3>
+                <button id="import-game-btn">📂 Import</button>
+                <input id="import-game-input" type="file" style="display: none;" />
+                <button id="export-game-btn">💾 Export</button>
+                <button id="save-game-btn">💾 Save</button>
+            </div>
+            <div class="reset-section">
+                <h3 style="color: red;">Danger Zone !</h3>
+                <button id="reset-game-btn" style="background-color: #F00; color: white;">X Reset Game</button>
+            </div>
+            <hr />
+            <!-- Developer Info -->
+            <div class="developer-info">
+                <h3>About</h3>
+                <p>© 2024 SkyBlyvion</p>
+                <p>License: <a href="https://opensource.org/licenses/MIT" target="_blank" style="color: #0F0; text-decoration: none;">MIT</a></p>
+                <p>
+                    GitHub: <a href="https://github.com/SkyBlyvion" target="_blank" style="color: #0F0; text-decoration: none;">SkyBlyvion</a>
+                </p>
+                <p style="font-size: 0.8em;">This game is provided "AS IS" without warranty of any kind.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <script src="script.js"></script> -->
+    <script src="optimized_game.js"></script>
+</body>
+</html>
+
+
+Et voici les fonctionnalitées a implémenter : 
+
+# Liste des Fonctionnalités à Implémenter
+
+Voici une liste triée des fonctionnalités les plus intéressantes à implémenter en premier, classées par priorité et impact sur l'expérience de jeu.
+
+---
+
+## **1. Ajout d’un Système d’Expérience** 🌟
+- **Effet** : 
+  - Gagnez de l'expérience en réalisant des projets.
+  - Débloquez des bonus spécifiques à chaque niveau (exemple : à partir du niveau 10, les améliorations coûtent 10% moins cher).
+- **Impact** : Ajoute un sentiment de progression et motive le joueur à optimiser ses actions.
+
+---
+
+## **2. Système de Prestige** 🔄
+- **Effet** : Réinitialise les statistiques actuelles en échange d'un multiplicateur permanent sur l'argent gagné (+10% par prestige).
+- **Thème** : Le joueur passe à une nouvelle carrière avec un meilleur rôle, comme "Architecte logiciel" ou "CTO".
+- **Impact** : Augmente la rejouabilité et incite à poursuivre le jeu sur le long terme.
+
+---
+
+## **3. Niveaux et Progression** 📈
+- **Effet** : Introduisez des niveaux qui débloquent progressivement du contenu et des défis.
+- **Impact** : Structure le gameplay et maintient l'intérêt du joueur.
+
+---
+
+## **4. Achievements** 🏆
+- **Effet** : Débloquez des récompenses ou bonus en atteignant des objectifs spécifiques.
+- **Impact** : Ajoute une couche supplémentaire de gratification pour les joueurs.
+
+---
