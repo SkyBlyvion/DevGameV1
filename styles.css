@@ -240,6 +240,27 @@ button:active {
     
 }
 
+/* media screen for samsung a34 360x780*/
+@media screen and (max-width: 360px) {
+    #settings-modal {
+        width: 300px;
+    }
+}
+
+.reset-section {
+    margin-top: 10px;
+    /* margin-bottom: 0px; */
+    border: 1px solid darkred;
+}
+
+.reset-section button {
+    padding: 10px 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
 .settings-actions button {
     display: inline-block;
     margin: 10px 0;
@@ -258,26 +279,12 @@ button:active {
     color: black;
 }
 
-.reset-section {
-    margin-top: 10px;
-    margin-bottom: 0px;
-    border: 1px solid darkred;
-    padding-top: 5px;
-}
-
-.reset-section button {
-    padding: 10px 15px;
-    margin: 10px 0;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-}
-
 .reset-section button:hover {
     transform: scale(1.05);
     background-color: darkred;
 }
+
+
 
 
 
