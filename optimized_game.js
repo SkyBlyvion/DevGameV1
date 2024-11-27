@@ -9,13 +9,20 @@ const gameState = {
     jobIncome: 0, // Income generated from active jobs per second
     projectBonus: 0, // Total bonus from jobs per project
     pulseInterval: null, // Store the interval ID
+    experience: 0,
+    level: 1,
+    nextLevelXp: 100, // XP nécessaire pour le prochain niveau
+    levelBonuses: {}, // Pour stocker les bonus débloqués
     
     elements: {
         moneyDisplay: document.getElementById("money"),
         moneyPerPulseDisplay: document.getElementById("money-per-pulse"),
         pulseSpeedDisplay: document.getElementById("pulse-speed"),
         projectBonusDisplay: document.getElementById("project-bonus"), // Reference to project bonus element
-        jobIncomeDisplay: document.getElementById("job-bonus") // Reference to job income element
+        jobIncomeDisplay: document.getElementById("job-bonus"), // Reference to job income element
+        experienceDisplay: document.getElementById("experience"),
+        levelDisplay: document.getElementById("level"),
+        nextLevelXpDisplay: document.getElementById("next-level-xp"),
     }
 };
 
@@ -25,7 +32,7 @@ const gameState = {
 // Centralized updates to stats
 // Reduces the number of DOM updates by grouping them into a single function.
 function updateStats() {
-    const { money, moneyPerPulse, jobIncome, projectBonus, pulseSpeed, elements } = gameState;
+    const { money, moneyPerPulse, jobIncome, projectBonus, pulseSpeed, experience, level, nextLevelXp, elements } = gameState;
     const totalIncomePerSecond = moneyPerPulse + jobIncome;
 
     elements.moneyDisplay.textContent = money.toFixed(2); // Format money with 2 decimal places
@@ -37,6 +44,11 @@ function updateStats() {
 
     // Update project bonus display
     elements.projectBonusDisplay.textContent = `${projectBonus.toFixed(2)} $`;
+
+    // Update level display
+    elements.experienceDisplay.textContent = experience.toFixed(2);
+    elements.levelDisplay.textContent = level;
+    elements.nextLevelXpDisplay.textContent = nextLevelXp.toFixed(2);
 }
 
 // Earn money
@@ -300,6 +312,16 @@ function takeQuickProject() {
             updateStats();
             // showAlert(`Quick Project completed! Base reward: $${projectReward}. Bonus from jobs: $${totalBonus}. Total: $${projectReward + totalBonus}`);
         }, 7500);
+        
+        // Gain d'XP
+        let xpGained = 20; // XP gagné pour ce projet
+        gameState.experience += xpGained;
+
+        // Vérifier le niveau
+        checkLevelUp();
+
+        // Mettre à jour l'affichage
+        updateStats();
 
     } else {
         showAlert("Not enough money for this project!");
@@ -326,6 +348,17 @@ function startProject() {
             gameState.money += projectReward + totalBonus; // Add base reward + bonuses
             updateStats();
         }, 15000);
+
+        // Gain d'XP
+        let xpGained = 80; // XP gagné pour ce projet
+        gameState.experience += xpGained;
+
+        // Vérifier le niveau
+        checkLevelUp();
+
+        // Mettre à jour l'affichage
+        updateStats();
+
     } else {
         showAlert("Not enough money to start this project!");
     }
@@ -485,6 +518,44 @@ function showAlert(message) {
     };
 }
 
+// --------------- Level functions ---------------
+// vérifier si le joueur a suffisamment d'XP
+function checkLevelUp() {
+    while (gameState.experience >= gameState.nextLevelXp) {
+        gameState.experience -= gameState.nextLevelXp;
+        gameState.level += 1;
+        gameState.nextLevelXp = Math.floor(gameState.nextLevelXp * 1.5); // Augmente l'XP nécessaire pour le prochain niveau
+
+        // Appliquer les bonus du niveau
+        applyLevelBonus(gameState.level);
+
+        // Informer le joueur
+        showAlert(`Félicitations ! Vous avez atteint le niveau ${gameState.level}.`);
+    }
+}
+
+// Appliquer les bonus du niveau
+// TODO: Tester les bonus de niveau
+function applyLevelBonus(level) {
+    switch(level) {
+        case 5:
+            // Exemple: Augmenter l'argent gagné par pulse de 10%
+            gameState.moneyPerPulse *= 1.1;
+            gameState.levelBonuses[level] = "Money per pulse increased by 10%";
+            //TODO: Ajouter Achievements
+            break;
+        case 10:
+            // Réduire le coût des améliorations de 10%
+            gameState.upgradeDiscount = 0.9; //TODO: Nouveau attribut, créer fonction
+            gameState.levelBonuses[level] = "Upgrades cost 10% less";
+            break;
+        // Ajoutez d'autres cas pour différents niveaux
+        default:
+            break;
+    }
+}
+
+
 
 // --------------- Menu ---------------
 // Function to handle menu toggle
@@ -524,12 +595,22 @@ document.getElementById("reset-game-btn").addEventListener("click", () => {
 /* {"money":4290,"moneyPerPulse":1,"pulseSpeed":1000,"jobIncome":0,"projectBonus":0,"activeJobs":[]} */
 function saveGame() {
     const saveData = {
+        // money and state
         money: gameState.money,
         moneyPerPulse: gameState.moneyPerPulse,
         pulseSpeed: gameState.pulseSpeed,
+
+        // job and state
         jobIncome: gameState.jobIncome,
         projectBonus: gameState.projectBonus,
-        activeJobs: [...jobState.activeJobs]
+        activeJobs: [...jobState.activeJobs],
+
+        // ajout de la section level, experience et discount
+        levelBonuses: gameState.levelBonuses,
+        level: gameState.level,
+        experience: gameState.experience,
+        nextLevelXp: gameState.nextLevelXp,
+        upgradeDiscount: gameState.upgradeDiscount
     };
 
     localStorage.setItem("devGameSave", JSON.stringify(saveData));
@@ -545,6 +626,13 @@ function loadGame() {
         gameState.jobIncome = savedData.jobIncome || 0;
         gameState.projectBonus = savedData.projectBonus || 0;
         jobState.activeJobs = savedData.activeJobs || [];
+
+        // ajout de la section level, experience et discount
+        gameState.levelBonuses = savedData.levelBonuses || {};
+        gameState.level = savedData.level || 1;
+        gameState.experience = savedData.experience || 0;
+        gameState.nextLevelXp = savedData.nextLevelXp || 100;
+        gameState.upgradeDiscount = savedData.upgradeDiscount || 1;
 
         // Update UI to reflect loaded data
         updateStats();
@@ -573,6 +661,13 @@ function importGame(event) {
                 gameState.projectBonus = importedData.projectBonus || 0;
                 jobState.activeJobs = importedData.activeJobs || [];
 
+                // ajout de la section level, experience et discount
+                gameState.levelBonuses = importedData.levelBonuses || {};
+                gameState.level = importedData.level || 1;
+                gameState.experience = importedData.experience || 0;
+                gameState.nextLevelXp = importedData.nextLevelXp || 100;
+                gameState.upgradeDiscount = importedData.upgradeDiscount || 1;
+
                 // Update UI
                 updateStats();
                 jobState.activeJobs.forEach((job, index) => {
@@ -591,12 +686,21 @@ function importGame(event) {
 
 function exportGame() {
     const saveData = JSON.stringify({
+
         money: gameState.money,
         moneyPerPulse: gameState.moneyPerPulse,
         pulseSpeed: gameState.pulseSpeed,
+
         jobIncome: gameState.jobIncome,
         projectBonus: gameState.projectBonus,
-        activeJobs: [...jobState.activeJobs]
+        activeJobs: [...jobState.activeJobs],
+
+        // ajout de la section level, experience et discount
+        levelBonuses: gameState.levelBonuses,
+        level: gameState.level,
+        experience: gameState.experience,
+        nextLevelXp: gameState.nextLevelXp,
+        upgradeDiscount: gameState.upgradeDiscount
     });
 
     const blob = new Blob([saveData], { type: "application/json" });
